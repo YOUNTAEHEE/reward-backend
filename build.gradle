@@ -38,7 +38,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-	testImplementation 'org.mockito:mockito-core'
+	implementation 'io.github.cdimascio:java-dotenv:5.2.2'
 }
 
 tasks.named('test') {
