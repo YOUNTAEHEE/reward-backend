@@ -1,0 +1,21 @@
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mapper/**/*.xml
+
+spring:
+  application:
+    name: reward
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_HIBERNATE_DDL}
+    show-sql: ${JPA_SHOW_SQL}
+    database-platform: ${JPA_DATABASE_PLATFORM}

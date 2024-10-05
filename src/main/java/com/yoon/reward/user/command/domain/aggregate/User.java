@@ -1,0 +1,115 @@
+package com.yoon.reward.user.command.domain.aggregate;
+
+import jakarta.persistence.*;
+
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "user")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long userNo;
+
+    @Column(nullable = false, unique = true)
+    private String userId;
+
+    @Column(nullable = false)
+    private String userPassword;
+
+    @Column(nullable = false)
+    private String userName;
+
+    @Column(nullable = false)
+    private String userNickname;
+
+    @Column(nullable = false)
+    private String userPhone;
+
+    @Column(nullable = false)
+    private String accountHolder;
+
+    @Column(nullable = false)
+    private String bankName;
+
+    @Column(nullable = false)
+    private String accountNumber;
+
+    @Column(nullable = false)
+    private LocalDate signDate;
+
+    @Column
+    private LocalDate resignDate;
+
+    @Column
+    private Long point;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole userRole;
+
+    public  User(){}
+
+    public User(String userId, String userPassword, String userName, String userNickname, String userPhone,
+                String accountHolder, String bankName, String accountNumber, Long point, UserRole userRole) {
+        this.userId = userId;
+        this.userPassword = userPassword;
+        this.userName = userName;
+        this.userNickname = userNickname;
+        this.userPhone = userPhone;
+        this.accountHolder = accountHolder;
+        this.bankName = bankName;
+        this.accountNumber = accountNumber;
+        this.signDate = LocalDate.now();
+        this.resignDate = null;
+        this.point = point;
+        this.userRole = userRole;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public String getUserNickname() {
+        return userNickname;
+    }
+
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userNo=" + userNo +
+                ", userId='" + userId + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userNickname='" + userNickname + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", accountHolder='" + accountHolder + '\'' +
+                ", bankName='" + bankName + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", signDate=" + signDate +
+                ", resignDate=" + resignDate +
+                ", point=" + point +
+                ", userRole=" + userRole +
+                '}';
+    }
+}
