@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import lombok.Cleanup;
 
 import java.time.LocalDateTime;
-
+@Entity
+@Table(name = "point_detail")
 public class PointDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

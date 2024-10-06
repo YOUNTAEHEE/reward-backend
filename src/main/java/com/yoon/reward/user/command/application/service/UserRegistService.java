@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.time.LocalDate.now;
+
 @Service
 @Transactional
 public class UserRegistService {
@@ -38,7 +40,7 @@ public class UserRegistService {
         User user = new User(userRegistRequestDTO.getUserId(), encodedPassword,
                 userRegistRequestDTO.getUserName(), userRegistRequestDTO.getUserNickname(),
                 userRegistRequestDTO.getUserPhone(), userRegistRequestDTO.getAccountHolder(),
-                userRegistRequestDTO.getBankName(), userRegistRequestDTO.getAccountNumber(), 0L, roles
+                userRegistRequestDTO.getBankName(), userRegistRequestDTO.getAccountNumber(), now(),null, 0L, roles
                 );
         userCommandRepository.save(user);
     }

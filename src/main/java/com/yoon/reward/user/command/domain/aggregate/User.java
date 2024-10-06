@@ -42,7 +42,7 @@ public class User {
     private LocalDate resignDate;
 
     @Column
-    private Long point;
+    private Long userPoint;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -51,7 +51,7 @@ public class User {
     public  User(){}
 
     public User(String userId, String userPassword, String userName, String userNickname, String userPhone,
-                String accountHolder, String bankName, String accountNumber, Long point, UserRole userRole) {
+                String accountHolder, String bankName, String accountNumber, LocalDate signDate, LocalDate resignDate, Long userPoint, UserRole userRole) {
         this.userId = userId;
         this.userPassword = userPassword;
         this.userName = userName;
@@ -60,9 +60,9 @@ public class User {
         this.accountHolder = accountHolder;
         this.bankName = bankName;
         this.accountNumber = accountNumber;
-        this.signDate = LocalDate.now();
-        this.resignDate = null;
-        this.point = point;
+        this.signDate = signDate;
+        this.resignDate = resignDate;
+        this.userPoint = userPoint;
         this.userRole = userRole;
     }
 
@@ -94,6 +94,14 @@ public class User {
         this.userPhone = userPhone;
     }
 
+    public Long getUserPoint() {
+        return userPoint;
+    }
+
+    public void setUserPoint(Long userPoint) {
+        this.userPoint = userPoint;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -108,7 +116,7 @@ public class User {
                 ", accountNumber='" + accountNumber + '\'' +
                 ", signDate=" + signDate +
                 ", resignDate=" + resignDate +
-                ", point=" + point +
+                ", userPoint=" + userPoint +
                 ", userRole=" + userRole +
                 '}';
     }
