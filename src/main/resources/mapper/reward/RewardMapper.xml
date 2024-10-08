@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yoon.reward.mapper.RewardMapper">
+    <select id="getRewardMissionById" parameterType="long" resultType="com.yoon.reward.reward.query.dto.RewardMissionDTO">
+        SELECT * FROM reward WHERE reward_no = #{rewardNo}
+    </select>
+
+    <select id="getRewardMissionById" parameterType="long" resultType="com.yoon.reward.reward.query.dto.RewardMissionDTO">
+        SELECT * FROM reward WHERE reward_no = #{rewardNo}
+    </select>
+
+</mapper>

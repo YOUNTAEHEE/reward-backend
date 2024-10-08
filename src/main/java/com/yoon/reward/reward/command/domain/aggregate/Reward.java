@@ -1,5 +1,6 @@
 package com.yoon.reward.reward.command.domain.aggregate;
 
+import com.yoon.reward.reward.query.dto.RewardMissionDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -7,6 +8,42 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "reward")
 public class Reward {
+
+    public Reward(){}
+
+    public Reward(long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus,
+                  String keyword, String salesChannel, long rewardProductPrice, long rewardPoint,
+                  String productCode, LocalDateTime rewardStartDate, LocalDateTime rewardEndDate,
+                  Long inflowCount, String rewardMemo) {
+        this.rewardNo = rewardNo;
+        this.advertiserId = advertiserId;
+        this.salesId = salesId;
+        this.rewardStatus = rewardStatus;
+        this.keyword = keyword;
+        this.salesChannel = salesChannel;
+        this.rewardProductPrice = rewardProductPrice;
+        this.rewardPoint = rewardPoint;
+        this.productCode = productCode;
+        this.rewardStartDate = rewardStartDate;
+        this.rewardEndDate = rewardEndDate;
+        this.inflowCount = inflowCount;
+        this.rewardMemo = rewardMemo;
+    }
+    public Reward(RewardMissionDTO rewardMissionDTO) {
+        this.rewardNo = rewardMissionDTO.getRewardNo();
+        this.advertiserId = rewardMissionDTO.getAdvertiserId();
+        this.salesId = rewardMissionDTO.getSalesId();
+        this.rewardStatus = rewardMissionDTO.getRewardStatus();
+        this.keyword = rewardMissionDTO.getKeyword();
+        this.salesChannel = rewardMissionDTO.getSalesChannel();
+        this.rewardProductPrice = rewardMissionDTO.getRewardProductPrice();
+        this.rewardPoint = rewardMissionDTO.getRewardPoint();
+        this.productCode = rewardMissionDTO.getProductCode();
+        this.rewardStartDate = rewardMissionDTO.getRewardStartDate();
+        this.rewardEndDate = rewardMissionDTO.getRewardEndDate();
+        this.inflowCount = rewardMissionDTO.getInflowCount();
+        this.rewardMemo = rewardMissionDTO.getRewardMemo();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,13 +66,13 @@ public class Reward {
     private String salesChannel;
 
     @Column(nullable = false)
-    private Long rewardProductPrice;
+    private long rewardProductPrice;
 
     @Column(nullable = false)
-    private String rewardPoint;
+    private long rewardPoint;
 
     @Column(nullable = false)
-    private Long productCode;
+    private String productCode;
 
     @Column(nullable = false)
     private LocalDateTime rewardStartDate;

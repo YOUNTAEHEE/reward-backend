@@ -18,14 +18,13 @@ public class UpdatePointController {
         this.updatePointService = updatePointService;
     }
 
-    @PostMapping()
-    public ResponseEntity<Long> updateUserPoint(@RequestBody PointDetailDTO pointDetailDTO){
+    @PostMapping("/transaction")
+    public ResponseEntity<Void> processPointTransaction(@RequestBody PointDetailDTO pointDetailDTO){
         try{
-            Long totalPoint = updatePointService.updateUserPoint(pointDetailDTO);
-            return ResponseEntity.ok(totalPoint);
+            updatePointService.processPointTransaction(pointDetailDTO);
+            return ResponseEntity.ok().build();
         } catch(IllegalArgumentException e) {
           return ResponseEntity.badRequest().body(null);
-
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
