@@ -15,9 +15,6 @@ public class RewardMissionTransactionController {
         this.rewardMissionTransactionService = rewardMissionTransactionService;
     }
 
-    //미션 등록
-
-    //미션수정
 
     //미션성공시 포인트 지급
     @PostMapping("/mission/{rewardNo}")

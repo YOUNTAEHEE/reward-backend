@@ -16,39 +16,16 @@ import org.springframework.stereotype.Service;
 import static java.time.LocalDateTime.now;
 @Service
 public class RewardMissionTransactionService {
-    private final UserQueryRepository userQueryRepository;
+
     private final UpdatePointService updatePointService;
     private final RewardMapper rewardMapper;
-    private final PointCommandRepository pointCommandRepository;
     private final RewardCommandRepository rewardCommandRepository;
 
-    public RewardMissionTransactionService(UserQueryRepository userQueryRepository,
-                                           UpdatePointService updatePointService, RewardMapper rewardMapper, PointCommandRepository pointCommandRepository, RewardCommandRepository rewardCommandRepository) {
-        this.userQueryRepository = userQueryRepository;
+    public RewardMissionTransactionService(UpdatePointService updatePointService, RewardMapper rewardMapper,
+                                           RewardCommandRepository rewardCommandRepository) {
         this.updatePointService = updatePointService;
         this.rewardMapper = rewardMapper;
-        this.pointCommandRepository = pointCommandRepository;
         this.rewardCommandRepository = rewardCommandRepository;
-    }
-
-    //미션 등록
-    public void rewardMissionSave(RewardMissionDTO rewardMissionDTO){
-        Reward reward = new Reward(rewardMissionDTO);
-        rewardCommandRepository.save(reward);
-    }
-
-    //미션수정
-    public void rewardMissionModify(RewardMissionDTO rewardMissionDTO){
-        RewardMissionDTO existingReward = rewardMapper.getRewardMissionById(rewardMissionDTO.getRewardNo());
-        //비활성화 된 미션 수정 못함
-        if(rewardMissionDTO.getRewardStatus() == RewardStatus.INACTIVE){
-            throw new IllegalStateException("비활성화된 미션은 수정할 수 없습니다.");
-        } else {
-            //유입수 수정 못함
-            rewardMissionDTO.setInflowCount(existingReward.getInflowCount());
-            Reward reward = new Reward(rewardMissionDTO);
-            rewardCommandRepository.save(reward);
-        }
     }
 
     //미션성공시 포인트 지급

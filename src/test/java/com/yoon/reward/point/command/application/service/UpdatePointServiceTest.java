@@ -47,18 +47,18 @@ class UpdatePointServiceTest {
     @DisplayName("입출금 테스트, 총 포인트 내역 반환")
     @ParameterizedTest
     @MethodSource("testPointDelta")
-    public void updateUeserPoint(PointDetailDTO pointDetailDTO){
+    public void processPointTransaction(PointDetailDTO pointDetailDTO){
         UserRegistDTO userRegistDTO = new UserRegistDTO("string", "string", "string", "string", "string", "string", "string", "string");
         userRegistService.registUser(userRegistDTO);
 
-        Long point = Assertions.assertDoesNotThrow(
-                () -> updatePointService.updateUserPoint(pointDetailDTO)
+     Assertions.assertDoesNotThrow(
+                () -> updatePointService.processPointTransaction(pointDetailDTO)
         );
-        System.out.println(point);
+
         User user = userQueryRepository.findByUserId(pointDetailDTO.getUserId())
                 .orElseThrow(()->new IllegalArgumentException("유저 정보가 없습니다."));
 
-        assertEquals(point, user.getUserPoint());
+        assertEquals(pointDetailDTO.getPointDelta(), user.getUserPoint());
     }
 
 }
