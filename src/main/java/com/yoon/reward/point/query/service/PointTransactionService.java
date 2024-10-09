@@ -32,6 +32,9 @@ public class PointTransactionService {
     //입출금 내역 조회
     public PointDetailDTO pointTransactionDetail(String userId){
         PointDetailDTO pointDetail = pointMapper.getPointTransactionDetail(userId);
+        if (pointDetail == null) {
+            throw new IllegalArgumentException("입출금 내역이 존재하지 않습니다.");
+        }
         return pointDetail;
     }
 

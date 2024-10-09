@@ -31,6 +31,10 @@ public class UpdatePointService {
 
 //입출금, 유저 테이블에도 총 포인트 저장
     public void processPointTransaction(PointDetailDTO pointDetailDTO){
+        if(pointDetailDTO == null){
+            throw new IllegalArgumentException("포인트가 반영이 되지 않습니다.");
+        }
+
         User user = userQueryRepository.findByUserId(pointDetailDTO.getUserId())
                 .orElseThrow(()->new IllegalArgumentException("유저 정보가 없습니다."));
 

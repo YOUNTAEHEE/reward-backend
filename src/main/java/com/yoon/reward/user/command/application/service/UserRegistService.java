@@ -40,7 +40,9 @@ public class UserRegistService {
         if(optionalUser.isPresent()){
             throw new IllegalStateException("이미 존재하는 아이디입니다.");
         }
-
+        if(userRegistRequestDTO == null){
+            throw new IllegalArgumentException("가입 정보가 입력이 되지 않습니다.");
+        }
         // 필수 입력값이 null일 경우 예외 처리
         if (userRegistRequestDTO.getUserId() == null || userRegistRequestDTO.getUserId().isEmpty()) {
             throw new IllegalArgumentException("아이디는 필수 항목입니다.");

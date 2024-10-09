@@ -23,13 +23,18 @@ public class UserInfoService {
 
     public boolean loginUser(UserLoginDTO userLoginDTO) {
     Optional<User> optionalUser = userQueryRepository.findByUserId(userLoginDTO.getUserId());
-       if (userLoginDTO.getUserId() == null || userLoginDTO.getUserId().isEmpty()) {
-           throw new IllegalArgumentException("아이디를 입력해주세요.");
-       }
 
-       if (userLoginDTO.getUserPassword() == null || userLoginDTO.getUserPassword().isEmpty()) {
+        if(userLoginDTO == null){
+            throw new IllegalArgumentException("로그인 정보가 입력되지 않습니다.");
+        }
+
+        if (userLoginDTO.getUserId() == null || userLoginDTO.getUserId().isEmpty()) {
+           throw new IllegalArgumentException("아이디를 입력해주세요.");
+        }
+
+        if (userLoginDTO.getUserPassword() == null || userLoginDTO.getUserPassword().isEmpty()) {
            throw new IllegalArgumentException("비밀번호를 입력해주세요.");
-       }
+        }
 
         if(optionalUser.isPresent()){
             User user = optionalUser.get();

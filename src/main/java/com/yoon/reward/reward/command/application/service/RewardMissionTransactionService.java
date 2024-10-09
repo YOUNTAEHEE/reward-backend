@@ -31,7 +31,9 @@ public class RewardMissionTransactionService {
     //미션성공시 포인트 지급
     public boolean rewardMissionValidate(Long rewardNo, String userId, String missionAnswer){
         RewardMissionDTO rewardMissionDTO = rewardMapper.getRewardMissionById(rewardNo);
-
+        if(rewardMissionDTO == null){
+            throw new IllegalArgumentException("해당 미션을 찾을 수 없습니다.");
+        }
         if (rewardMissionDTO.getRewardStatus() == RewardStatus.INACTIVE) {
             throw new IllegalStateException("이미 끝난 미션입니다.");
         }

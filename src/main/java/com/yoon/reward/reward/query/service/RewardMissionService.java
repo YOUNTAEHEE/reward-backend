@@ -26,6 +26,9 @@ public class RewardMissionService {
     //리워드 조회해서 리워드 미션하기쪽에 데이터 뿌리기
     public RewardMissionDTO rewardMission(Long rewardNo){
         RewardMissionDTO rewardMissionDTO = rewardMapper.getRewardMissionById(rewardNo);
+        if (rewardMissionDTO == null) {
+            throw new IllegalArgumentException("해당 미션을 찾을 수 없습니다.");
+        }
         return rewardMissionDTO;
     }
 

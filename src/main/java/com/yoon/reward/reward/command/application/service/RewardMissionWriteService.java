@@ -30,12 +30,61 @@ public class RewardMissionWriteService {
 
     //미션 등록
     public void rewardMissionWrite(RewardMissionDTO rewardMissionDTO){
+        // null 또는 빈 값 체크
+        if (rewardMissionDTO == null) {
+            throw new IllegalArgumentException("미션 등록 정보가 입력되지 않습니다.");
+        }
+
+        if (rewardMissionDTO.getAdvertiserId() == null || rewardMissionDTO.getAdvertiserId().isEmpty()) {
+            throw new IllegalArgumentException("광고주 ID는 필수 항목입니다.");
+        }
+
+        if (rewardMissionDTO.getSalesId() == null || rewardMissionDTO.getSalesId().isEmpty()) {
+            throw new IllegalArgumentException("영업 ID는 필수 항목입니다.");
+        }
+
+        if (rewardMissionDTO.getKeyword() == null || rewardMissionDTO.getKeyword().isEmpty()) {
+            throw new IllegalArgumentException("키워드는 필수 항목입니다.");
+        }
+
+        if (rewardMissionDTO.getSalesChannel() == null || rewardMissionDTO.getSalesChannel().isEmpty()) {
+            throw new IllegalArgumentException("판매 채널은 필수 항목입니다.");
+        }
+
+        if (rewardMissionDTO.getRewardProductPrice() <= 0) {
+            throw new IllegalArgumentException("리워드 상품 가격은 0보다 커야 합니다.");
+        }
+
+        if (rewardMissionDTO.getRewardPoint() <= 0) {
+            throw new IllegalArgumentException("리워드 포인트는 0보다 커야 합니다.");
+        }
+
+        if (rewardMissionDTO.getProductCode() == null || rewardMissionDTO.getProductCode().isEmpty()) {
+            throw new IllegalArgumentException("상품 코드는 필수 항목입니다.");
+        }
+
+        if (rewardMissionDTO.getRewardStartDate() == null) {
+            throw new IllegalArgumentException("시작 날짜는 필수 항목입니다.");
+        }
+
+        if (rewardMissionDTO.getRewardEndDate() == null) {
+            throw new IllegalArgumentException("종료 날짜는 필수 항목입니다.");
+        }
+
+        if (rewardMissionDTO.getInflowCount() <= 0) {
+            throw new IllegalArgumentException("유입수는 0보다 커야 합니다.");
+        }
+
         Reward reward = new Reward(rewardMissionDTO);
         rewardCommandRepository.save(reward);
     }
 
     //미션수정
     public void rewardMissionModify(RewardMissionDTO rewardMissionDTO){
+        if (rewardMissionDTO == null) {
+            throw new IllegalArgumentException("미션 수정 정보가 입력되지 않습니다.");
+        }
+
         RewardMissionDTO existingReward = rewardMapper.getRewardMissionById(rewardMissionDTO.getRewardNo());
 
         LocalDate today = LocalDate.now();

@@ -25,7 +25,9 @@ public class UserInfoModifyService {
     }
 
     public UserInfoModifyDTO modifyUserInfo(UserInfoModifyDTO userInfoModifyDTO){
-
+        if (userInfoModifyDTO == null) {
+            throw new IllegalArgumentException("사용자 정보가 입력되지 않습니다.");
+        }
         if (userInfoModifyDTO.getUserNickname() == null || userInfoModifyDTO.getUserNickname().isEmpty()) {
             throw new IllegalArgumentException("닉네임은 필수 항목입니다.");
         }
