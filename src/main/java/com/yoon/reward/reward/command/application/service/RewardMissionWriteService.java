@@ -1,5 +1,5 @@
 package com.yoon.reward.reward.command.application.service;
-
+import java.time.LocalDate;
 import com.yoon.reward.mapper.RewardMapper;
 import com.yoon.reward.point.command.application.service.UpdatePointService;
 import com.yoon.reward.point.command.domain.repository.PointCommandRepository;
@@ -37,14 +37,60 @@ public class RewardMissionWriteService {
     //미션수정
     public void rewardMissionModify(RewardMissionDTO rewardMissionDTO){
         RewardMissionDTO existingReward = rewardMapper.getRewardMissionById(rewardMissionDTO.getRewardNo());
-        //비활성화 된 미션 수정 못함
-        if(rewardMissionDTO.getRewardStatus() == RewardStatus.INACTIVE){
-            throw new IllegalStateException("비활성화된 미션은 수정할 수 없습니다.");
-        } else {
-            //유입수 수정 못함
-            rewardMissionDTO.setInflowCount(existingReward.getInflowCount());
-            Reward reward = new Reward(rewardMissionDTO);
-            rewardCommandRepository.save(reward);
+
+        LocalDate today = LocalDate.now();
+
+        //활성화 된 미션 수정 못함
+        if(rewardMissionDTO.getRewardStatus() == RewardStatus.ACTIVE){
+            throw new IllegalStateException("활성화된 미션은 수정할 수 없습니다.");
         }
+
+        // 종료 날짜가 이미 지난 경우 수정 불가
+        if (existingReward.getRewardEndDate().isBefore(today)) {
+            existingReward.setRewardStatus(RewardStatus.INACTIVE);
+            throw new IllegalStateException("미션 종료 날짜가 지났으므로 수정할 수 없습니다.");
+        }
+
+        // 시작 날짜가 오늘보다 이전이면 수정 가능
+        if (existingReward.getRewardStartDate().isBefore(today)) {
+            existingReward.setRewardStatus(RewardStatus.INACTIVE);
+            throw new IllegalStateException("미션 시작 전에만 수정이 가능합니다.");
+        }
+
+        // 각 필드가 null이면 예외 발생
+        if (rewardMissionDTO.getSalesId() == null || rewardMissionDTO.getSalesId().isEmpty()) {
+            throw new IllegalArgumentException("판매자 ID는 필수 항목입니다.");
+        }
+        if (rewardMissionDTO.getKeyword() == null || rewardMissionDTO.getKeyword().isEmpty()) {
+            throw new IllegalArgumentException("키워드는 필수 항목입니다.");
+        }
+        if (rewardMissionDTO.getSalesChannel() == null || rewardMissionDTO.getSalesChannel().isEmpty()) {
+            throw new IllegalArgumentException("판매 채널은 필수 항목입니다.");
+        }
+        if (rewardMissionDTO.getRewardProductPrice() == null || rewardMissionDTO.getRewardProductPrice() == 0) {
+            throw new IllegalArgumentException("리워드 제품 가격은 필수 항목입니다.");
+        }
+        if (rewardMissionDTO.getProductCode() == null || rewardMissionDTO.getProductCode().isEmpty()) {
+            throw new IllegalArgumentException("제품 코드는 필수 항목입니다.");
+        }
+        if (rewardMissionDTO.getRewardStartDate() == null) {
+            throw new IllegalArgumentException("리워드 시작 날짜는 필수 항목입니다.");
+        }
+        if (rewardMissionDTO.getRewardEndDate() == null) {
+            throw new IllegalArgumentException("리워드 종료 날짜는 필수 항목입니다.");
+        }
+
+        // 유입수 수정 못함, 활성화 수정 못함
+        existingReward.setSalesId(rewardMissionDTO.getSalesId());
+        existingReward.setKeyword(rewardMissionDTO.getKeyword());
+        existingReward.setSalesChannel(rewardMissionDTO.getSalesChannel());
+        existingReward.setRewardProductPrice(rewardMissionDTO.getRewardProductPrice());
+        existingReward.setProductCode(rewardMissionDTO.getProductCode());
+        existingReward.setRewardStartDate(rewardMissionDTO.getRewardStartDate());
+        existingReward.setRewardEndDate(rewardMissionDTO.getRewardEndDate());
+        existingReward.setRewardMemo(rewardMissionDTO.getRewardMemo());
+
+        Reward reward = new Reward(existingReward);
+        rewardCommandRepository.save(reward);
     }
 }

@@ -3,29 +3,29 @@ package com.yoon.reward.reward.query.dto;
 import com.yoon.reward.reward.command.domain.aggregate.RewardStatus;
 import jakarta.persistence.Column;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class RewardMissionDTO {
-    private long rewardNo;
+    private Long rewardNo;
     private String advertiserId;
     private String salesId;
     private RewardStatus rewardStatus;
     private String keyword;
     private String salesChannel;
-    private long rewardProductPrice;
-    private long rewardPoint;
+    private Long rewardProductPrice;
+    private Long rewardPoint;
     private String productCode;
-    private LocalDateTime rewardStartDate;
-    private LocalDateTime rewardEndDate;
+    private LocalDate rewardStartDate;
+    private LocalDate rewardEndDate;
     private Long inflowCount;
     private Long actualInflowCount;
     private String rewardMemo;
 
     public RewardMissionDTO(){}
 
-    public RewardMissionDTO(long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus,
-                            String keyword, String salesChannel, long rewardProductPrice, long rewardPoint,
-                            String productCode, LocalDateTime rewardStartDate, LocalDateTime rewardEndDate,
+    public RewardMissionDTO(Long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus,
+                            String keyword, String salesChannel, Long rewardProductPrice, Long rewardPoint,
+                            String productCode, LocalDate rewardStartDate, LocalDate rewardEndDate,
                             Long inflowCount, String rewardMemo) {
         this.rewardNo = rewardNo;
         this.advertiserId = advertiserId;
@@ -43,8 +43,8 @@ public class RewardMissionDTO {
     }
 
     public RewardMissionDTO(String advertiserId, String salesId, RewardStatus rewardStatus, String keyword,
-                            String salesChannel, long rewardProductPrice, long rewardPoint, String productCode,
-                            LocalDateTime rewardStartDate, LocalDateTime rewardEndDate,
+                            String salesChannel, Long rewardProductPrice, Long rewardPoint, String productCode,
+                            LocalDate rewardStartDate, LocalDate rewardEndDate,
                             Long inflowCount, String rewardMemo) {
         this.advertiserId = advertiserId;
         this.salesId = salesId;
@@ -60,9 +60,9 @@ public class RewardMissionDTO {
         this.rewardMemo = rewardMemo;
     }
 
-    public RewardMissionDTO(long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus, String keyword,
-                            String salesChannel, long rewardProductPrice, long rewardPoint, String productCode,
-                            LocalDateTime rewardStartDate, LocalDateTime rewardEndDate, Long inflowCount,
+    public RewardMissionDTO(Long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus, String keyword,
+                            String salesChannel, Long rewardProductPrice, Long rewardPoint, String productCode,
+                            LocalDate rewardStartDate, LocalDate rewardEndDate, Long inflowCount,
                             Long actualInflowCount, String rewardMemo) {
         this.rewardNo = rewardNo;
         this.advertiserId = advertiserId;
@@ -80,11 +80,11 @@ public class RewardMissionDTO {
         this.rewardMemo = rewardMemo;
     }
 
-    public long getRewardNo() {
+    public Long getRewardNo() {
         return rewardNo;
     }
 
-    public void setRewardNo(long rewardNo) {
+    public void setRewardNo(Long rewardNo) {
         this.rewardNo = rewardNo;
     }
 
@@ -128,19 +128,19 @@ public class RewardMissionDTO {
         this.salesChannel = salesChannel;
     }
 
-    public long getRewardProductPrice() {
+    public Long getRewardProductPrice() {
         return rewardProductPrice;
     }
 
-    public void setRewardProductPrice(long rewardProductPrice) {
+    public void setRewardProductPrice(Long rewardProductPrice) {
         this.rewardProductPrice = rewardProductPrice;
     }
 
-    public long getRewardPoint() {
+    public Long getRewardPoint() {
         return rewardPoint;
     }
 
-    public void setRewardPoint(long rewardPoint) {
+    public void setRewardPoint(Long rewardPoint) {
         this.rewardPoint = rewardPoint;
     }
 
@@ -152,19 +152,19 @@ public class RewardMissionDTO {
         this.productCode = productCode;
     }
 
-    public LocalDateTime getRewardStartDate() {
+    public LocalDate getRewardStartDate() {
         return rewardStartDate;
     }
 
-    public void setRewardStartDate(LocalDateTime rewardStartDate) {
+    public void setRewardStartDate(LocalDate rewardStartDate) {
         this.rewardStartDate = rewardStartDate;
     }
 
-    public LocalDateTime getRewardEndDate() {
+    public LocalDate getRewardEndDate() {
         return rewardEndDate;
     }
 
-    public void setRewardEndDate(LocalDateTime rewardEndDate) {
+    public void setRewardEndDate(LocalDate rewardEndDate) {
         this.rewardEndDate = rewardEndDate;
     }
 

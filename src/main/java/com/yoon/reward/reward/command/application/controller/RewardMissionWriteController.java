@@ -21,6 +21,10 @@ public class RewardMissionWriteController {
     //미션 등록
     @PostMapping("/write")
     public ResponseEntity<String> rewardMissionWrite(@RequestBody RewardMissionDTO rewardMissionDTO){
+        if (rewardMissionDTO == null) {
+            return ResponseEntity.badRequest().body("리워드 정보를 입력해주세요");
+        }
+       
         try{
             rewardMissionWriteService.rewardMissionWrite(rewardMissionDTO);
             return ResponseEntity.ok("리워드를 등록했습니다");
@@ -35,6 +39,10 @@ public class RewardMissionWriteController {
     //미션수정
     @PostMapping("/modify")
     public ResponseEntity<String> rewardMissionModify(@RequestBody RewardMissionDTO rewardMissionDTO){
+        if (rewardMissionDTO == null) {
+            return ResponseEntity.badRequest().body("등록된 기존 리워드가 없습니다.");
+        }
+
         try{
             rewardMissionWriteService.rewardMissionModify(rewardMissionDTO);
             return ResponseEntity.ok("리워드를 수정했습니다");

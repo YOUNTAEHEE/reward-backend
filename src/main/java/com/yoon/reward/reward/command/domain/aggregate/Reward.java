@@ -3,6 +3,7 @@ package com.yoon.reward.reward.command.domain.aggregate;
 import com.yoon.reward.reward.query.dto.RewardMissionDTO;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,9 +12,9 @@ public class Reward {
 
     public Reward(){}
 
-    public Reward(long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus,
-                  String keyword, String salesChannel, long rewardProductPrice, long rewardPoint,
-                  String productCode, LocalDateTime rewardStartDate, LocalDateTime rewardEndDate,
+    public Reward(Long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus,
+                  String keyword, String salesChannel, Long rewardProductPrice, Long rewardPoint,
+                  String productCode, LocalDate rewardStartDate, LocalDate rewardEndDate,
                   Long inflowCount, String rewardMemo) {
         this.rewardNo = rewardNo;
         this.advertiserId = advertiserId;
@@ -47,7 +48,7 @@ public class Reward {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long rewardNo;
+    private Long rewardNo;
 
     @Column(nullable = false)
     private String advertiserId;
@@ -66,19 +67,19 @@ public class Reward {
     private String salesChannel;
 
     @Column(nullable = false)
-    private long rewardProductPrice;
+    private Long rewardProductPrice;
 
     @Column(nullable = false)
-    private long rewardPoint;
+    private Long rewardPoint;
 
     @Column(nullable = false)
     private String productCode;
 
     @Column(nullable = false)
-    private LocalDateTime rewardStartDate;
+    private LocalDate rewardStartDate;
 
     @Column(nullable = false)
-    private LocalDateTime rewardEndDate;
+    private LocalDate rewardEndDate;
 
     @Column
     private Long inflowCount;

@@ -6,9 +6,4 @@
     <select id="getRewardMissionById" parameterType="long" resultType="com.yoon.reward.reward.query.dto.RewardMissionDTO">
         SELECT * FROM reward WHERE reward_no = #{rewardNo}
     </select>
-
-    <select id="getRewardMissionById" parameterType="long" resultType="com.yoon.reward.reward.query.dto.RewardMissionDTO">
-        SELECT * FROM reward WHERE reward_no = #{rewardNo}
-    </select>
-
 </mapper>

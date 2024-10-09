@@ -25,6 +25,17 @@ public class UserInfoModifyService {
     }
 
     public UserInfoModifyDTO modifyUserInfo(UserInfoModifyDTO userInfoModifyDTO){
+
+        if (userInfoModifyDTO.getUserNickname() == null || userInfoModifyDTO.getUserNickname().isEmpty()) {
+            throw new IllegalArgumentException("닉네임은 필수 항목입니다.");
+        }
+        if (userInfoModifyDTO.getUserPassword() == null || userInfoModifyDTO.getUserPassword().isEmpty()) {
+            throw new IllegalArgumentException("비밀번호는 필수 항목입니다.");
+        }
+        if (userInfoModifyDTO.getUserPhone() == null || userInfoModifyDTO.getUserPhone().isEmpty()) {
+            throw new IllegalArgumentException("전화번호는 필수 항목입니다.");
+        }
+
         User user = userQueryRepository.findByUserId(userInfoModifyDTO.getUserId())
                 .orElseThrow(()->new IllegalArgumentException("유저 정보가 없습니다"));
         if(userInfoModifyDTO.getUserPassword() != null && !userInfoModifyDTO.getUserNickname().isEmpty()){

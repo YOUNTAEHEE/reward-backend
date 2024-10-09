@@ -8,11 +8,11 @@ public class PointDetailDTO {
     private String userId;
     private PointAction pointAction;
     private LocalDateTime pointDate;
-    private long pointDelta;
+    private Long pointDelta;
 
     public PointDetailDTO(){}
 
-    public PointDetailDTO(String userId, PointAction pointAction, LocalDateTime pointDate, long pointDelta) {
+    public PointDetailDTO(String userId, PointAction pointAction, LocalDateTime pointDate, Long pointDelta) {
         this.userId = userId;
         this.pointAction = pointAction;
         this.pointDate = pointDate;
@@ -47,7 +47,7 @@ public class PointDetailDTO {
         return pointDelta;
     }
 
-    public void setPointDelta(long pointDelta) {
+    public void setPointDelta(Long pointDelta) {
         this.pointDelta = pointDelta;
     }
 

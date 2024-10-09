@@ -18,7 +18,7 @@ public class PointDetail {
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long pointNo;
+    private Long pointNo;
 
     @Column(nullable = false)
     private String userId;
@@ -31,7 +31,7 @@ public class PointDetail {
     private LocalDateTime pointDate;
 
     @Column(nullable = false)
-    private long pointDelta;
+    private Long pointDelta;
 
 
 }

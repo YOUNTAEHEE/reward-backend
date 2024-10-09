@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userNo;
+    private Long userNo;
 
     @Column(nullable = false, unique = true)
     private String userId;

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static java.time.LocalDate.now;
@@ -35,6 +36,44 @@ public class UserRegistService {
     public void registUser(UserRegistDTO userRegistRequestDTO) {
         UserRole roles = UserRole.ROLE_USER;
 
+        Optional<User> optionalUser = userQueryRepository.findByUserId(userRegistRequestDTO.getUserId());
+        if(optionalUser.isPresent()){
+            throw new IllegalStateException("이미 존재하는 아이디입니다.");
+        }
+
+        // 필수 입력값이 null일 경우 예외 처리
+        if (userRegistRequestDTO.getUserId() == null || userRegistRequestDTO.getUserId().isEmpty()) {
+            throw new IllegalArgumentException("아이디는 필수 항목입니다.");
+        }
+
+        if (userRegistRequestDTO.getUserPassword() == null || userRegistRequestDTO.getUserPassword().isEmpty()) {
+            throw new IllegalArgumentException("비밀번호는 필수 항목입니다.");
+        }
+
+        if (userRegistRequestDTO.getUserName() == null || userRegistRequestDTO.getUserName().isEmpty()) {
+            throw new IllegalArgumentException("이름은 필수 항목입니다.");
+        }
+
+        if (userRegistRequestDTO.getUserNickname() == null || userRegistRequestDTO.getUserNickname().isEmpty()) {
+            throw new IllegalArgumentException("닉네임은 필수 항목입니다.");
+        }
+
+        if (userRegistRequestDTO.getUserPhone() == null || userRegistRequestDTO.getUserPhone().isEmpty()) {
+            throw new IllegalArgumentException("전화번호는 필수 항목입니다.");
+        }
+
+        if (userRegistRequestDTO.getAccountHolder() == null || userRegistRequestDTO.getAccountHolder().isEmpty()) {
+            throw new IllegalArgumentException("계좌 소유자는 필수 항목입니다.");
+        }
+
+        if (userRegistRequestDTO.getBankName() == null || userRegistRequestDTO.getBankName().isEmpty()) {
+            throw new IllegalArgumentException("은행명은 필수 항목입니다.");
+        }
+
+        if (userRegistRequestDTO.getAccountNumber() == null || userRegistRequestDTO.getAccountNumber().isEmpty()) {
+            throw new IllegalArgumentException("계좌 번호는 필수 항목입니다.");
+        }
+
         String encodedPassword = passwordEncoder.encode(userRegistRequestDTO.getUserPassword());
 
         User user = new User(userRegistRequestDTO.getUserId(), encodedPassword,
@@ -44,6 +83,4 @@ public class UserRegistService {
                 );
         userCommandRepository.save(user);
     }
-
-
 }

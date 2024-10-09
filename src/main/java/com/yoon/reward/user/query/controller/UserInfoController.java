@@ -18,6 +18,10 @@ public class UserInfoController {
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody UserLoginDTO userLoginDTO){
+        if (userLoginDTO == null || userLoginDTO.getUserId() == null || userLoginDTO.getUserPassword() == null) {
+            return new ResponseEntity<>("유저 정보가 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+
         boolean isAuthenticated = userInfoService.loginUser(userLoginDTO);
 
         if(isAuthenticated){

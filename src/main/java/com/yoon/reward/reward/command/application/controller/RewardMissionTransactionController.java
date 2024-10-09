@@ -20,6 +20,11 @@ public class RewardMissionTransactionController {
     @PostMapping("/mission/{rewardNo}")
     public ResponseEntity<String> rewardMissionValidate(@PathVariable Long rewardNo, @RequestParam String userId,
                                                         @RequestParam String missionAnswer){
+
+        if (missionAnswer == null || missionAnswer.isEmpty()) {
+            return ResponseEntity.badRequest().body("정답을 입력해주세요.");
+        }
+
         try{
             boolean isMissionSuccess = rewardMissionTransactionService.rewardMissionValidate(rewardNo,userId,missionAnswer);
             if(isMissionSuccess){

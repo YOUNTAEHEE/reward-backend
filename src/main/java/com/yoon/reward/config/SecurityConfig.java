@@ -12,28 +12,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 public class SecurityConfig {
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();  // BCryptPasswordEncoder를 PasswordEncoder로 반환
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public static BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//    @Bean
-//    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/**").permitAll()
-//                        .anyRequest().authenticated()
-//
-//                );
-//        return http.build();
-//    }
+    @Bean
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())  // CSRF 보호 비활성화
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/login").permitAll()
+                        .requestMatchers("/reward").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/reward/admin").hasRole("ADMIN")
+                        .requestMatchers("/reward/advertiser").hasAnyRole("ADVERTISER", "ADMIN")
+                        .requestMatchers("/reward/sales").hasAnyRole("SALES", "ADMIN")
+                        .requestMatchers("my/**").hasAnyRole("ADMIN", "USER", "ADVERTISER", "SALES")
+                        .anyRequest().authenticated()
+                );
+        http
+                .formLogin((auth)->auth.loginPage("/login")
+                        .loginProcessingUrl("/loginProc")
+                        .permitAll()
+                );
+        return http.build();
+    }
 
 
 

@@ -31,6 +31,13 @@ public class RewardMissionTransactionService {
     //미션성공시 포인트 지급
     public boolean rewardMissionValidate(Long rewardNo, String userId, String missionAnswer){
         RewardMissionDTO rewardMissionDTO = rewardMapper.getRewardMissionById(rewardNo);
+
+        if (rewardMissionDTO.getRewardStatus() == RewardStatus.INACTIVE) {
+            throw new IllegalStateException("이미 끝난 미션입니다.");
+        }
+        if (missionAnswer == null || missionAnswer.isEmpty()) {
+            throw new IllegalStateException("정답을 입력해주세요.");
+        }
         if(rewardMissionDTO.getProductCode() == missionAnswer){
             //만약 실 유입수가 유입수를 넘어선다면 포인트 지급 막기
             if(rewardMissionDTO.getInflowCount() > rewardMissionDTO.getActualInflowCount()){
@@ -45,21 +52,20 @@ public class RewardMissionTransactionService {
                 pointDetailDTO.setPointDelta(rewardMissionDTO.getRewardPoint());
                 updatePointService.processPointTransaction(pointDetailDTO);
                 //실유입수 칼럼에 저장코드
-                RewardMissionDTO rewardMissionDTO2 = rewardMapper.getRewardMissionById(rewardNo);
                 Reward reward = new Reward(
-                        rewardMissionDTO2.getRewardNo(),
-                        rewardMissionDTO2.getAdvertiserId(),
-                        rewardMissionDTO2.getSalesId(),
-                        rewardMissionDTO2.getRewardStatus(),
-                        rewardMissionDTO2.getKeyword(),
-                        rewardMissionDTO2.getSalesChannel(),
-                        rewardMissionDTO2.getRewardProductPrice(),
-                        rewardMissionDTO2.getRewardPoint(),
-                        rewardMissionDTO2.getProductCode(),
-                        rewardMissionDTO2.getRewardStartDate(),
-                        rewardMissionDTO2.getRewardEndDate(),
-                        rewardMissionDTO2.getInflowCount() + 1,
-                        rewardMissionDTO2.getRewardMemo()
+                        rewardMissionDTO.getRewardNo(),
+                        rewardMissionDTO.getAdvertiserId(),
+                        rewardMissionDTO.getSalesId(),
+                        rewardMissionDTO.getRewardStatus(),
+                        rewardMissionDTO.getKeyword(),
+                        rewardMissionDTO.getSalesChannel(),
+                        rewardMissionDTO.getRewardProductPrice(),
+                        rewardMissionDTO.getRewardPoint(),
+                        rewardMissionDTO.getProductCode(),
+                        rewardMissionDTO.getRewardStartDate(),
+                        rewardMissionDTO.getRewardEndDate(),
+                        rewardMissionDTO.getInflowCount() + 1,
+                        rewardMissionDTO.getRewardMemo()
                 );
                 rewardCommandRepository.save(reward);
             }
