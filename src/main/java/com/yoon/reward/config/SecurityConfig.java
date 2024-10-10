@@ -24,7 +24,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // CSRF 보호 비활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login").permitAll()
+                        .requestMatchers("/", "/login", "/join").permitAll()
                         .requestMatchers("/reward").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/reward/admin").hasRole("ADMIN")
                         .requestMatchers("/reward/advertiser").hasAnyRole("ADVERTISER", "ADMIN")
@@ -35,6 +35,10 @@ public class SecurityConfig {
         http
                 .formLogin((auth)->auth.loginPage("/login")
                         .loginProcessingUrl("/loginProc")
+                        .loginPage("/login")
+                        .loginProcessingUrl("/loginProc")
+                        .usernameParameter("userId")
+                        .passwordParameter("userPassword")
                         .permitAll()
                 );
         return http.build();

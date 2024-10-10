@@ -16,18 +16,19 @@ public class UserInfoController {
         this.userInfoService = userInfoService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserLoginDTO userLoginDTO){
-        if (userLoginDTO == null || userLoginDTO.getUserId() == null || userLoginDTO.getUserPassword() == null) {
-            return new ResponseEntity<>("유저 정보가 없습니다.", HttpStatus.BAD_REQUEST);
-        }
-
-        boolean isAuthenticated = userInfoService.loginUser(userLoginDTO);
-
-        if(isAuthenticated){
-            return ResponseEntity.ok ("로그인이 되었습니다.");
-        } else{
-            return new ResponseEntity<>("로그인에 실패했습니다.",HttpStatus.UNAUTHORIZED);
-        }
-     }
+    //스프링 시큐리티로 인해 아래 코드 필요없음
+//    @PostMapping("/login")
+//    public ResponseEntity<String> loginUser(@RequestBody UserLoginDTO userLoginDTO){
+//        if (userLoginDTO == null || userLoginDTO.getUserId() == null || userLoginDTO.getUserPassword() == null) {
+//            return new ResponseEntity<>("유저 정보가 없습니다.", HttpStatus.BAD_REQUEST);
+//        }
+//
+//        boolean isAuthenticated = userInfoService.loginUser(userLoginDTO);
+//
+//        if(isAuthenticated){
+//            return ResponseEntity.ok ("로그인이 되었습니다.");
+//        } else{
+//            return new ResponseEntity<>("로그인에 실패했습니다.",HttpStatus.UNAUTHORIZED);
+//        }
+//    }
 }

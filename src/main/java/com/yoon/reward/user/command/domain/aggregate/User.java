@@ -102,6 +102,10 @@ public class User {
         this.userPoint = userPoint;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
     @Override
     public String toString() {
         return "User{" +
