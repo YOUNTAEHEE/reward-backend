@@ -17,7 +17,6 @@ public class UserInfoModifyService {
     private final PasswordEncoder passwordEncoder;
     private final UserQueryRepository userQueryRepository;
 
-    @Autowired
     public UserInfoModifyService(UserCommandRepository userCommandRepository,  PasswordEncoder passwordEncoder, UserQueryRepository userQueryRepository) {
         this.userCommandRepository = userCommandRepository;
         this.passwordEncoder = passwordEncoder;

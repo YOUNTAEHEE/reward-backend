@@ -19,7 +19,7 @@ import java.util.Optional;
 public class UserInfoService implements UserDetailsService {
     private final UserQueryRepository userQueryRepository;
     private final PasswordEncoder passwordEncoder;
-@Autowired
+    @Autowired
     public UserInfoService(UserQueryRepository userQueryRepository,PasswordEncoder passwordEncoder ) {
         this.userQueryRepository = userQueryRepository;
         this.passwordEncoder = passwordEncoder;
@@ -56,5 +56,8 @@ public class UserInfoService implements UserDetailsService {
             return new CustomUserDetails(user);
         }
         return null;
+    }
+    public boolean checkPassword(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 }

@@ -25,7 +25,7 @@ public class UserRegistService {
     private final UserCommandRepository userCommandRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserQueryRepository userQueryRepository;
-    @Autowired
+
     public UserRegistService(UserCommandRepository userCommandRepository,  PasswordEncoder passwordEncoder,
                              UserQueryRepository userQueryRepository) {
         this.userCommandRepository = userCommandRepository;

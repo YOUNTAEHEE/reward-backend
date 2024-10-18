@@ -66,6 +66,10 @@ public class User {
         this.userRole = userRole;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -100,6 +104,10 @@ public class User {
 
     public void setUserPoint(Long userPoint) {
         this.userPoint = userPoint;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public UserRole getUserRole() {

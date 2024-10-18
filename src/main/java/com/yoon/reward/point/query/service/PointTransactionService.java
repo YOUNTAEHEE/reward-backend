@@ -20,7 +20,7 @@ public class PointTransactionService {
     private UserCommandRepository userCommandRepository;
     private PointCommandRepository pointCommandRepository;
     private PointMapper pointMapper;
-    @Autowired
+
     public PointTransactionService(UserQueryRepository userQueryRepository, UserCommandRepository userCommandRepository,
                                    PointCommandRepository pointCommandRepository, PointMapper pointMapper) {
         this.userQueryRepository = userQueryRepository;

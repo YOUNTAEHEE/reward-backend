@@ -4,6 +4,8 @@ import com.yoon.reward.user.query.dto.UserLoginDTO;
 import com.yoon.reward.user.query.service.UserInfoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,4 +33,12 @@ public class UserInfoController {
 //            return new ResponseEntity<>("로그인에 실패했습니다.",HttpStatus.UNAUTHORIZED);
 //        }
 //    }
+
+    // 인증된 사용자가 접근할 수 있는 보호된 리소스(JWT용)
+    @GetMapping("/profile")
+    public ResponseEntity<?> getUserProfile(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return ResponseEntity.ok(userDetails);
+    }
+
 }
