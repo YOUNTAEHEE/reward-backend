@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -33,40 +35,33 @@ public class JWTController {
         this.userInfoService = userInfoService;
     }
 
-//    // 로그인 요청을 처리하여 JWT 토큰을 반환
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestParam String loginId, @RequestParam String password) {
-//        try {
-//            // 인증 요청
-//            Authentication authentication = authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(loginId, password)
-//            );
-//
-//            // 인증된 사용자 정보
-//            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-//            String userId = userDetails.getUsername();
-//
-//            // 사용자 권한 (ROLE) 가져오기
-//            Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-//            GrantedAuthority authority = authorities.iterator().next(); // 첫 번째 권한만 가져옴 (단일 권한인 경우)
-//
-//            // String으로 권한을 받아서 UserRole로 변환
-//            UserRole role = UserRole.valueOf(authority.getAuthority());
-//
-//            // JWT 토큰 생성
-//            String token = jwtUtil.createJwt(userId, role, 60 * 60 * 1000L); // 1시간 만료
-//
-//            // 토큰을 Response로 반환
-//            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body("JWT Token 발급 완료");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(401).body("인증 실패: " + e.getMessage());
-//        }
-//    }
-
     // 로그인 요청을 처리하여 JWT 토큰을 반환
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
         try {
+            // 에러 메시지를 담을 리스트 선언
+            List<String> errors = new ArrayList<>();
+
+            // userLoginDTO가 null인 경우 처리
+            if (userLoginDTO == null) {
+                return ResponseEntity.status(400).body("로그인 정보가 입력되지 않았습니다.");
+            }
+
+            // 아이디 검증
+            if (userLoginDTO.getUserId() == null || userLoginDTO.getUserId().isEmpty()) {
+                errors.add("아이디를 입력해주세요.");
+            }
+
+            // 비밀번호 검증
+            if (userLoginDTO.getUserPassword() == null || userLoginDTO.getUserPassword().isEmpty()) {
+                errors.add("비밀번호를 입력해주세요.");
+            }
+
+            // 에러가 있을 경우, 에러 메시지를 반환
+            if (!errors.isEmpty()) {
+                return ResponseEntity.status(400).body(errors);
+            }
+
             String userId = userLoginDTO.getUserId();
             String rawPassword = userLoginDTO.getUserPassword();
 

@@ -24,29 +24,6 @@ public class UserInfoService implements UserDetailsService {
         this.userQueryRepository = userQueryRepository;
         this.passwordEncoder = passwordEncoder;
     }
-//스프링 시큐리티로 인해 아래 코드 필요없음
-//    public boolean loginUser(UserLoginDTO userLoginDTO) {
-//    Optional<User> optionalUser = userQueryRepository.findByUserId(userLoginDTO.getUserId());
-//
-//        if(userLoginDTO == null){
-//            throw new IllegalArgumentException("로그인 정보가 입력되지 않습니다.");
-//        }
-//
-//        if (userLoginDTO.getUserId() == null || userLoginDTO.getUserId().isEmpty()) {
-//           throw new IllegalArgumentException("아이디를 입력해주세요.");
-//        }
-//
-//        if (userLoginDTO.getUserPassword() == null || userLoginDTO.getUserPassword().isEmpty()) {
-//           throw new IllegalArgumentException("비밀번호를 입력해주세요.");
-//        }
-//
-//        if(optionalUser.isPresent()){
-//            User user = optionalUser.get();
-//            return passwordEncoder.matches(userLoginDTO.getUserPassword(), user.getUserPassword());
-//
-//        }
-//    return false;
-//    }
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
