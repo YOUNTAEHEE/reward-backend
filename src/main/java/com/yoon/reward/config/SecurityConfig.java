@@ -78,7 +78,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // CSRF 보호 비활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/auth/login" ,"/login", "/join", "/api/v1/user/join", "/auth/logout").permitAll()
+                        .requestMatchers("/", "/auth/login" ,"/login", "/join", "/api/v1/user/join", "/auth/logout", "/api/v1/email/send" , "/api/v1/email/**").permitAll()
                         // Swagger 관련 경로들에 대해 접근 허용
                         .requestMatchers(
                                 "/v3/api-docs/**",
