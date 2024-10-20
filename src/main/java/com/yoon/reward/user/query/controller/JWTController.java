@@ -41,9 +41,6 @@ public class JWTController {
     // 로그인 요청을 처리하여 JWT 토큰을 반환
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
-        System.out.println("userLoginDTO: " + userLoginDTO);
-        System.out.println("userLoginDTO.getUserId(): " + userLoginDTO.getUserId());
-        System.out.println("userLoginDTO.getUserPassword(): " + userLoginDTO.getUserPassword());
         try {
             // 에러 메시지를 담을 리스트 선언
             List<String> errors = new ArrayList<>();
@@ -88,10 +85,10 @@ public class JWTController {
             UserRole role = UserRole.valueOf(authority.getAuthority());
 
             // JWT 토큰 생성
-            String token = jwtUtil.createJwt(userId, role, 60 * 60 * 211000L); // 1시간 만료
+            String token = jwtUtil.createJwt(userId, role, 60 * 60 * 211000L);
 
             // 토큰을 Response로 반환
-            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body(Map.of("token", token, "successMessage", "JWT Token 발급 완료"));
+            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body(Map.of("token", token, "successMessage", "로그인이 되었습니다."));
         } catch (CustomBusinessException e) {
             throw e;
         } catch (IllegalArgumentException e) {
@@ -126,7 +123,11 @@ public class JWTController {
     // 로그아웃 처리 (옵션)
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
-        SecurityContextHolder.clearContext();
-        return ResponseEntity.ok("로그아웃 완료");
+        try {
+            SecurityContextHolder.clearContext();
+            return ResponseEntity.ok("로그아웃 완료");
+        }catch(Exception e) {
+            throw new RuntimeException("로그아웃 중 오류가 발생했습니다.");
+        }
     }
 }

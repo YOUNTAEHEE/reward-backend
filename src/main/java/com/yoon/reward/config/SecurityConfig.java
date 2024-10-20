@@ -78,7 +78,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // CSRF 보호 비활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/auth/login" ,"/login", "/join", "/api/v1/user/join", "/auth/logout", "/api/v1/email/send" , "/api/v1/email/**").permitAll()
+                        .requestMatchers("/", "/auth/login", "/auth/logout", "/logout" ,"/login", "/join",
+                                "/api/v1/user/join", "/api/v1/email/send" , "/api/v1/email/**").permitAll()
                         // Swagger 관련 경로들에 대해 접근 허용
                         .requestMatchers(
                                 "/v3/api-docs/**",
@@ -87,11 +88,11 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/swagger-ui.html"
                         ).permitAll()
-                        .requestMatchers("/reward").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/reward/admin").hasRole("ADMIN")
-                        .requestMatchers("/reward/advertiser").hasAnyRole("ADVERTISER", "ADMIN")
-                        .requestMatchers("/reward/sales").hasAnyRole("SALES", "ADMIN")
+                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/advertiser").hasAnyRole("ADVERTISER", "ADMIN")
+                        .requestMatchers("/sales").hasAnyRole("SALES", "ADMIN")
                         .requestMatchers("my/**").hasAnyRole("ADMIN", "USER", "ADVERTISER", "SALES")
+                        .requestMatchers("/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
                 );
 //        http

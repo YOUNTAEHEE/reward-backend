@@ -12,10 +12,19 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     // InvalidVerificationCodeException 처리
+//    @ExceptionHandler(CustomBusinessException.class)
+//    public ResponseEntity<Object> handleInvalidVerificationCode(CustomBusinessException ex) {
+//        return ResponseEntity
+//                .status(HttpStatus.BAD_REQUEST)
+//                .body(createErrorResponse(ex.getMessage()));
+//    }
+
+        // InvalidVerificationCodeException 처리
     @ExceptionHandler(CustomBusinessException.class)
     public ResponseEntity<Object> handleInvalidVerificationCode(CustomBusinessException ex) {
+        System.out.println("CustomBusinessException Handler Called: " + ex.getMessage());
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(ex.getStatus())
                 .body(createErrorResponse(ex.getMessage()));
     }
 
@@ -35,11 +44,24 @@ public class GlobalExceptionHandler {
     }
 
     // 예시: 500 Internal Server Error 처리
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleInternalError(Exception ex) {
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Object> handleInternalError(Exception ex) {
+//        return ResponseEntity
+//                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(createErrorResponse("서버에서 문제가 발생했습니다."));
+//    }
+
+    // 예시: 500 Internal Server Error 처리
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Object> handleInternalError(RuntimeException ex) {
+        System.out.println("RuntimeException Handler Called: " + ex.getMessage());
+        String errorMessage = (ex.getMessage() == null || ex.getMessage().isEmpty())
+                ? "서버에서 에러 발생"
+                : ex.getMessage();
+
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(createErrorResponse("서버에서 문제가 발생했습니다."));
+                .body(createErrorResponse(errorMessage));
     }
 
     // 에러 응답을 만드는 메서드
