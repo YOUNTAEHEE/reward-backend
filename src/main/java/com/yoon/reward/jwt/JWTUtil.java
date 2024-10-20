@@ -25,7 +25,8 @@ public class JWTUtil {
 
     public UserRole getRole(String token) {
 
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", UserRole.class);
+        String roleName = Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
+        return UserRole.valueOf(roleName);
     }
 
     public Boolean isExpired(String token) {
@@ -47,7 +48,7 @@ public class JWTUtil {
         try {
             String token = Jwts.builder()
                     .claim("userId", userId)
-                    .claim("role", role)
+                    .claim("role", role.name())
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + expiredMs))
                     .signWith(secretKey, SignatureAlgorithm.HS256)

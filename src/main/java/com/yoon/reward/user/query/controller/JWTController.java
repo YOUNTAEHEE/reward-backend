@@ -1,10 +1,12 @@
 package com.yoon.reward.user.query.controller;
+import com.yoon.reward.exception.CustomBusinessException;
 import com.yoon.reward.jwt.JWTUtil;
 import com.yoon.reward.user.command.domain.aggregate.UserRole;
 import com.yoon.reward.user.query.dto.CustomUserDetails;
 import com.yoon.reward.user.query.dto.UserLoginDTO;
 import com.yoon.reward.user.query.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -38,13 +41,16 @@ public class JWTController {
     // 로그인 요청을 처리하여 JWT 토큰을 반환
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
+        System.out.println("userLoginDTO: " + userLoginDTO);
+        System.out.println("userLoginDTO.getUserId(): " + userLoginDTO.getUserId());
+        System.out.println("userLoginDTO.getUserPassword(): " + userLoginDTO.getUserPassword());
         try {
             // 에러 메시지를 담을 리스트 선언
             List<String> errors = new ArrayList<>();
 
             // userLoginDTO가 null인 경우 처리
             if (userLoginDTO == null) {
-                return ResponseEntity.status(400).body("로그인 정보가 입력되지 않았습니다.");
+                throw new IllegalArgumentException("로그인 정보가 입력되지 않았습니다.");
             }
 
             // 아이디 검증
@@ -59,7 +65,7 @@ public class JWTController {
 
             // 에러가 있을 경우, 에러 메시지를 반환
             if (!errors.isEmpty()) {
-                return ResponseEntity.status(400).body(errors);
+                throw new IllegalArgumentException(String.join(", ", errors));
             }
 
             String userId = userLoginDTO.getUserId();
@@ -71,7 +77,7 @@ public class JWTController {
 
             // 비밀번호 검증
             if (!userInfoService.checkPassword(rawPassword, encodedPassword)) {
-                return ResponseEntity.status(401).body("비밀번호가 일치하지 않습니다.");
+                throw new CustomBusinessException("비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED);
             }
 
             // 인증된 사용자 정보
@@ -82,12 +88,17 @@ public class JWTController {
             UserRole role = UserRole.valueOf(authority.getAuthority());
 
             // JWT 토큰 생성
-            String token = jwtUtil.createJwt(userId, role, 60 * 60 * 1000L); // 1시간 만료
+            String token = jwtUtil.createJwt(userId, role, 60 * 60 * 211000L); // 1시간 만료
 
             // 토큰을 Response로 반환
-            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body("JWT Token 발급 완료");
+            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body(Map.of("token", token, "successMessage", "JWT Token 발급 완료"));
+        } catch (CustomBusinessException e) {
+            throw e;
+        } catch (IllegalArgumentException e) {
+            throw e;
         } catch (Exception e) {
-            return ResponseEntity.status(401).body("인증 실패: " + e.getMessage());
+//            throw new RuntimeException("인증 실패: " + e.getMessage());
+            throw e;
         }
     }
 
@@ -97,12 +108,12 @@ public class JWTController {
         String authorizationHeader = request.getHeader("Authorization");
 
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(401).body("토큰이 없습니다.");
+            throw new CustomBusinessException("토큰이 없습니다.", HttpStatus.UNAUTHORIZED);
         }
 
         String token = authorizationHeader.substring(7); // "Bearer " 제거 후 토큰만 추출
         if (jwtUtil.isExpired(token)) {
-            return ResponseEntity.status(401).body("토큰이 만료되었습니다.");
+            throw new CustomBusinessException("토큰이 만료되었습니다.", HttpStatus.UNAUTHORIZED);
         }
 
         // 토큰에서 사용자 ID 및 역할(Role) 추출
