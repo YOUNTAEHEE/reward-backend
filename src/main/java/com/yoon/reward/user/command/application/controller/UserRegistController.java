@@ -33,4 +33,18 @@ public class UserRegistController {
           throw new RuntimeException("서버 에러가 발생했습니다. 다시 시도해 주세요.");
       }
     }
+
+    @PostMapping("/sales/join")
+    public ResponseEntity<String> registSales(@RequestBody UserRegistDTO userRegistDTO){
+        try{
+            userRegistService.registSales(userRegistDTO);
+            return new ResponseEntity<>("가입되었습니다!",HttpStatus.CREATED);
+        }catch (IllegalStateException e) {
+            throw new IllegalStateException(e.getMessage()); // 이미 존재하는 아이디의 경우 409 상태 코드 사용
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage()); // 필수 항목 누락의 경우 400 상태 코드 사용
+        } catch (Exception e) {
+            throw new RuntimeException("서버 에러가 발생했습니다. 다시 시도해 주세요.");
+        }
+    }
 }

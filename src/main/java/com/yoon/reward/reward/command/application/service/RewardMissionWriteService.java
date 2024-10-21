@@ -138,6 +138,8 @@ public class RewardMissionWriteService {
         existingReward.setRewardStartDate(rewardMissionDTO.getRewardStartDate());
         existingReward.setRewardEndDate(rewardMissionDTO.getRewardEndDate());
         existingReward.setRewardMemo(rewardMissionDTO.getRewardMemo());
+        existingReward.setRewardMemo(rewardMissionDTO.getProductURL());
+        existingReward.setRewardMemo(rewardMissionDTO.getProductName());
 
         Reward reward = new Reward(existingReward);
         rewardCommandRepository.save(reward);

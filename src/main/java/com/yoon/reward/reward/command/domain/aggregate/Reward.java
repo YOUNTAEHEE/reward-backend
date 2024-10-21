@@ -12,19 +12,21 @@ public class Reward {
 
     public Reward(){}
 
-    public Reward(Long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus,
+    public Reward(Long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus, String productURL,
                   String keyword, String salesChannel, Long rewardProductPrice, Long rewardPoint,
-                  String productCode, LocalDate rewardStartDate, LocalDate rewardEndDate,
+                  String productCode, String productName, LocalDate rewardStartDate, LocalDate rewardEndDate,
                   Long inflowCount, String rewardMemo) {
         this.rewardNo = rewardNo;
         this.advertiserId = advertiserId;
         this.salesId = salesId;
         this.rewardStatus = rewardStatus;
+        this.productURL = productURL;
         this.keyword = keyword;
         this.salesChannel = salesChannel;
         this.rewardProductPrice = rewardProductPrice;
         this.rewardPoint = rewardPoint;
         this.productCode = productCode;
+        this.productName = productName;
         this.rewardStartDate = rewardStartDate;
         this.rewardEndDate = rewardEndDate;
         this.inflowCount = inflowCount;
@@ -35,11 +37,13 @@ public class Reward {
         this.advertiserId = rewardMissionDTO.getAdvertiserId();
         this.salesId = rewardMissionDTO.getSalesId();
         this.rewardStatus = rewardMissionDTO.getRewardStatus();
+        this.productURL = rewardMissionDTO.getProductURL();
         this.keyword = rewardMissionDTO.getKeyword();
         this.salesChannel = rewardMissionDTO.getSalesChannel();
         this.rewardProductPrice = rewardMissionDTO.getRewardProductPrice();
         this.rewardPoint = rewardMissionDTO.getRewardPoint();
         this.productCode = rewardMissionDTO.getProductCode();
+        this.productName = rewardMissionDTO.getProductName();
         this.rewardStartDate = rewardMissionDTO.getRewardStartDate();
         this.rewardEndDate = rewardMissionDTO.getRewardEndDate();
         this.inflowCount = rewardMissionDTO.getInflowCount();
@@ -61,6 +65,9 @@ public class Reward {
     private RewardStatus rewardStatus;
 
     @Column(nullable = false)
+    private String productURL;
+
+    @Column(nullable = false)
     private String keyword;
 
     @Column(nullable = false)
@@ -74,6 +81,9 @@ public class Reward {
 
     @Column(nullable = false)
     private String productCode;
+
+    @Column(nullable = false)
+    private String productName;
 
     @Column(nullable = false)
     private LocalDate rewardStartDate;
