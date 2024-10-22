@@ -1,12 +1,19 @@
 package com.yoon.reward.reward.command.application.service;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Optional;
+
 import com.yoon.reward.mapper.RewardMapper;
+import com.yoon.reward.point.command.application.dto.PointDetailDTO;
 import com.yoon.reward.point.command.application.service.UpdatePointService;
+import com.yoon.reward.point.command.domain.aggregate.PointAction;
 import com.yoon.reward.point.command.domain.repository.PointCommandRepository;
 import com.yoon.reward.reward.command.domain.aggregate.Reward;
 import com.yoon.reward.reward.command.domain.aggregate.RewardStatus;
 import com.yoon.reward.reward.command.domain.repository.RewardCommandRepository;
 import com.yoon.reward.reward.query.dto.RewardMissionDTO;
+import com.yoon.reward.user.command.domain.aggregate.User;
 import com.yoon.reward.user.query.repository.UserQueryRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,11 +43,15 @@ public class RewardMissionWriteService {
         }
 
         if (rewardMissionDTO.getAdvertiserId() == null || rewardMissionDTO.getAdvertiserId().isEmpty()) {
-            throw new IllegalArgumentException("광고주 ID는 필수 항목입니다.");
+            throw new IllegalArgumentException("사용자 ID는 필수 항목입니다.");
         }
 
         if (rewardMissionDTO.getSalesId() == null || rewardMissionDTO.getSalesId().isEmpty()) {
-            throw new IllegalArgumentException("영업 ID는 필수 항목입니다.");
+            throw new IllegalArgumentException("영업자 ID는 필수 항목입니다.");
+        }
+
+        if (rewardMissionDTO.getProductURL() == null || rewardMissionDTO.getProductURL().isEmpty()) {
+            throw new IllegalArgumentException("상품URL은 필수 항목입니다.");
         }
 
         if (rewardMissionDTO.getKeyword() == null || rewardMissionDTO.getKeyword().isEmpty()) {
@@ -59,8 +70,16 @@ public class RewardMissionWriteService {
             throw new IllegalArgumentException("리워드 포인트는 0보다 커야 합니다.");
         }
 
-        if (rewardMissionDTO.getProductCode() == null || rewardMissionDTO.getProductCode().isEmpty()) {
-            throw new IllegalArgumentException("상품 코드는 필수 항목입니다.");
+        if (rewardMissionDTO.getProductId() == null || rewardMissionDTO.getProductId().isEmpty()) {
+            throw new IllegalArgumentException("상품ID는 필수 항목입니다.");
+        }
+
+        if (rewardMissionDTO.getProductName() == null || rewardMissionDTO.getProductName().isEmpty()) {
+            throw new IllegalArgumentException("상품이름은 필수 항목입니다.");
+        }
+
+        if (rewardMissionDTO.getPriceComparison() == null || rewardMissionDTO.getPriceComparison().isEmpty()) {
+            throw new IllegalArgumentException("가격비교여부는 필수 항목입니다.");
         }
 
         if (rewardMissionDTO.getRewardStartDate() == null) {
@@ -71,12 +90,56 @@ public class RewardMissionWriteService {
             throw new IllegalArgumentException("종료 날짜는 필수 항목입니다.");
         }
 
+        // 날짜 유효성 검사: 시작 날짜와 종료 날짜가 10일, 20일, 30일 중 하나로 설정되었는지 확인
+        LocalDate startDate = rewardMissionDTO.getRewardStartDate();
+        LocalDate endDate = rewardMissionDTO.getRewardEndDate();
+        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+
+        // 날짜에 따른 추가 포인트 차감 설정
+        Long datePointsToDeduct = 0L;
+        if (daysBetween == 10) {
+            datePointsToDeduct = 500L; // 10일 기간은 추가 차감 500 포인트
+        } else if (daysBetween == 20) {
+            datePointsToDeduct = 1000L; // 20일 기간은 추가 차감 1000 포인트
+        } else if (daysBetween == 30) {
+            datePointsToDeduct = 1500L; // 30일 기간은 추가 차감 1500 포인트
+        } else {
+            throw new IllegalArgumentException("리워드 기간은 10일, 20일, 30일 중 하나여야 합니다.");
+        }
+
         if (rewardMissionDTO.getInflowCount() <= 0) {
             throw new IllegalArgumentException("유입수는 0보다 커야 합니다.");
         }
 
+        Optional<User> optionalUser = userQueryRepository.findByUserId(rewardMissionDTO.getSalesId());
+        if (optionalUser.isEmpty()) {
+            throw new IllegalArgumentException("해당 ID의 사용자를 찾을 수 없습니다.");
+        }
+        User user = optionalUser.get();
+        // 포인트 차감 계산: 유입수 * 100
+        Long inflowPointsToDeduct = rewardMissionDTO.getInflowCount() * 100;
+        Long currentUserPoints = user.getUserPoint();
+
+        Long totalPointsToDeduct = inflowPointsToDeduct + datePointsToDeduct;
+        // 차감될 포인트가 사용자 포인트보다 클 경우 예외 처리
+        if (currentUserPoints < totalPointsToDeduct) {
+            throw new IllegalArgumentException(
+                    "사용자의 포인트가 부족합니다. 필요한 포인트: " + totalPointsToDeduct + ", 현재 포인트: " + currentUserPoints
+            );
+        }
+        PointDetailDTO pointDetailDTO = new PointDetailDTO();
+        pointDetailDTO.setUserId(rewardMissionDTO.getSalesId()); // 차감 대상 사용자 ID 설정
+        pointDetailDTO.setPointAction(PointAction.POINT_WITHDRAW); // 포인트 차감 동작 설정
+        pointDetailDTO.setPointDate(LocalDateTime.now()); // 현재 시간 설정
+        pointDetailDTO.setPointDelta(totalPointsToDeduct); // 총 차감 포인트 설정
+        updatePointService.processPointTransaction(pointDetailDTO);
+
+        Long maxCode = rewardCommandRepository.findMaxRewardCode();
+        rewardMissionDTO.setRewardId(maxCode != null ? maxCode + 1 : 10000); // 여기서 코드 설정
         Reward reward = new Reward(rewardMissionDTO);
         rewardCommandRepository.save(reward);
+
+
     }
 
     //미션수정
@@ -107,39 +170,52 @@ public class RewardMissionWriteService {
         }
 
         // 각 필드가 null이면 예외 발생
+
         if (rewardMissionDTO.getSalesId() == null || rewardMissionDTO.getSalesId().isEmpty()) {
-            throw new IllegalArgumentException("판매자 ID는 필수 항목입니다.");
+            throw new IllegalArgumentException("영업자 ID는 필수 항목입니다.");
         }
+
+        if (rewardMissionDTO.getProductURL() == null || rewardMissionDTO.getProductURL().isEmpty()) {
+            throw new IllegalArgumentException("상품URL은 필수 항목입니다.");
+        }
+
         if (rewardMissionDTO.getKeyword() == null || rewardMissionDTO.getKeyword().isEmpty()) {
             throw new IllegalArgumentException("키워드는 필수 항목입니다.");
         }
+
         if (rewardMissionDTO.getSalesChannel() == null || rewardMissionDTO.getSalesChannel().isEmpty()) {
             throw new IllegalArgumentException("판매 채널은 필수 항목입니다.");
         }
-        if (rewardMissionDTO.getRewardProductPrice() == null || rewardMissionDTO.getRewardProductPrice() == 0) {
-            throw new IllegalArgumentException("리워드 제품 가격은 필수 항목입니다.");
+
+        if (rewardMissionDTO.getRewardProductPrice() <= 0) {
+            throw new IllegalArgumentException("리워드 상품 가격은 0보다 커야 합니다.");
         }
-        if (rewardMissionDTO.getProductCode() == null || rewardMissionDTO.getProductCode().isEmpty()) {
-            throw new IllegalArgumentException("제품 코드는 필수 항목입니다.");
+
+        if (rewardMissionDTO.getProductId() == null || rewardMissionDTO.getProductId().isEmpty()) {
+            throw new IllegalArgumentException("상품ID는 필수 항목입니다.");
         }
-        if (rewardMissionDTO.getRewardStartDate() == null) {
-            throw new IllegalArgumentException("리워드 시작 날짜는 필수 항목입니다.");
+
+        if (rewardMissionDTO.getProductName() == null || rewardMissionDTO.getProductName().isEmpty()) {
+            throw new IllegalArgumentException("상품이름은 필수 항목입니다.");
         }
-        if (rewardMissionDTO.getRewardEndDate() == null) {
-            throw new IllegalArgumentException("리워드 종료 날짜는 필수 항목입니다.");
+
+        if (rewardMissionDTO.getPriceComparison() == null || rewardMissionDTO.getPriceComparison().isEmpty()) {
+            throw new IllegalArgumentException("가격비교여부는 필수 항목입니다.");
         }
+
+
 
         // 유입수 수정 못함, 활성화 수정 못함
         existingReward.setSalesId(rewardMissionDTO.getSalesId());
         existingReward.setKeyword(rewardMissionDTO.getKeyword());
         existingReward.setSalesChannel(rewardMissionDTO.getSalesChannel());
         existingReward.setRewardProductPrice(rewardMissionDTO.getRewardProductPrice());
-        existingReward.setProductCode(rewardMissionDTO.getProductCode());
-        existingReward.setRewardStartDate(rewardMissionDTO.getRewardStartDate());
-        existingReward.setRewardEndDate(rewardMissionDTO.getRewardEndDate());
+        existingReward.setProductId(rewardMissionDTO.getProductId());
+        existingReward.setOptionId(rewardMissionDTO.getOptionId());
+        existingReward.setPriceComparison(rewardMissionDTO.getPriceComparison());
         existingReward.setRewardMemo(rewardMissionDTO.getRewardMemo());
-        existingReward.setRewardMemo(rewardMissionDTO.getProductURL());
-        existingReward.setRewardMemo(rewardMissionDTO.getProductName());
+        existingReward.setProductURL(rewardMissionDTO.getProductURL());
+        existingReward.setProductName(rewardMissionDTO.getProductName());
 
         Reward reward = new Reward(existingReward);
         rewardCommandRepository.save(reward);

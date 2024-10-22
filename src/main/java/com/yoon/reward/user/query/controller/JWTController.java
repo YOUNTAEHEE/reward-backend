@@ -1,9 +1,11 @@
 package com.yoon.reward.user.query.controller;
 import com.yoon.reward.exception.CustomBusinessException;
 import com.yoon.reward.jwt.JWTUtil;
+import com.yoon.reward.user.command.domain.aggregate.User;
 import com.yoon.reward.user.command.domain.aggregate.UserRole;
 import com.yoon.reward.user.query.dto.CustomUserDetails;
 import com.yoon.reward.user.query.dto.UserLoginDTO;
+import com.yoon.reward.user.query.repository.UserQueryRepository;
 import com.yoon.reward.user.query.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,11 +30,14 @@ public class JWTController {
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
     private final UserInfoService userInfoService;
-    @Autowired
-    public JWTController(AuthenticationManager authenticationManager, JWTUtil jwtUtil, UserInfoService userInfoService) {
+    private final UserQueryRepository userQueryRepository;
+
+    public JWTController(AuthenticationManager authenticationManager, JWTUtil jwtUtil, UserInfoService userInfoService,
+                         UserQueryRepository userQueryRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userInfoService = userInfoService;
+        this.userQueryRepository = userQueryRepository;
     }
 
     // 로그인 요청을 처리하여 JWT 토큰을 반환
@@ -87,8 +89,18 @@ public class JWTController {
             // JWT 토큰 생성
             String token = jwtUtil.createJwt(userId, role, 60 * 60 * 211000L);
 
+            Optional<User> optionalUser = userQueryRepository.findByUserId(userLoginDTO.getUserId());
+
+            Map<String, Object> userInfo = new HashMap<>();
+
+            optionalUser.ifPresent(user -> {
+                userInfo.put("userId", userDetails.getUsername());
+                userInfo.put("userNickname", user.getUserNickname());
+                userInfo.put("userPoint", user.getUserPoint());
+            });
+
             // 토큰을 Response로 반환
-            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body(Map.of("token", token, "successMessage", "로그인이 되었습니다."));
+            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body(Map.of("token", token,"userInfo", userInfo,"successMessage", "로그인이 되었습니다."));
         } catch (CustomBusinessException e) {
             throw e;
         } catch (IllegalArgumentException e) {

@@ -40,7 +40,7 @@ public class RewardMissionTransactionService {
         if (missionAnswer == null || missionAnswer.isEmpty()) {
             throw new IllegalStateException("정답을 입력해주세요.");
         }
-        if(rewardMissionDTO.getProductCode() == missionAnswer){
+        if(rewardMissionDTO.getProductId() == missionAnswer){
             //만약 실 유입수가 유입수를 넘어선다면 포인트 지급 막기
             if(rewardMissionDTO.getInflowCount() > rewardMissionDTO.getActualInflowCount()){
                 rewardMissionDTO.setRewardStatus(RewardStatus.INACTIVE);
@@ -56,6 +56,7 @@ public class RewardMissionTransactionService {
                 //실유입수 칼럼에 저장코드
                 Reward reward = new Reward(
                         rewardMissionDTO.getRewardNo(),
+                        rewardMissionDTO.getRewardId(),
                         rewardMissionDTO.getAdvertiserId(),
                         rewardMissionDTO.getSalesId(),
                         rewardMissionDTO.getRewardStatus(),
@@ -64,8 +65,10 @@ public class RewardMissionTransactionService {
                         rewardMissionDTO.getSalesChannel(),
                         rewardMissionDTO.getRewardProductPrice(),
                         rewardMissionDTO.getRewardPoint(),
-                        rewardMissionDTO.getProductCode(),
+                        rewardMissionDTO.getProductId(),
+                        rewardMissionDTO.getOptionId(),
                         rewardMissionDTO.getProductName(),
+                        rewardMissionDTO.getPriceComparison(),
                         rewardMissionDTO.getRewardStartDate(),
                         rewardMissionDTO.getRewardEndDate(),
                         rewardMissionDTO.getInflowCount() + 1,

@@ -38,7 +38,7 @@ public class UpdatePointService {
         User user = userQueryRepository.findByUserId(pointDetailDTO.getUserId())
                 .orElseThrow(()->new IllegalArgumentException("유저 정보가 없습니다."));
 
-        PointDetail pointDetail = new PointDetail((pointDetailDTO));
+        PointDetail pointDetail = new PointDetail(pointDetailDTO);
         pointCommandRepository.save(pointDetail);
 
         if(pointDetailDTO.getPointAction() == PointAction.POINT_DEPOSIT){

@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 public class RewardMissionDTO {
     private Long rewardNo;
+    private Long rewardId;
     private String advertiserId;
     private String salesId;
     private RewardStatus rewardStatus;
@@ -15,8 +16,10 @@ public class RewardMissionDTO {
     private String salesChannel;
     private Long rewardProductPrice;
     private Long rewardPoint;
-    private String productCode;
+    private String productId;
+    private String optionId;
     private String productName;
+    private String priceComparison;
     private LocalDate rewardStartDate;
     private LocalDate rewardEndDate;
     private Long inflowCount;
@@ -25,11 +28,12 @@ public class RewardMissionDTO {
 
     public RewardMissionDTO(){}
 
-    public RewardMissionDTO(Long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus,
+    public RewardMissionDTO(Long rewardNo, Long rewardId, String advertiserId, String salesId, RewardStatus rewardStatus,
                             String productURL, String keyword, String salesChannel, Long rewardProductPrice, Long rewardPoint,
-                            String productName , String productCode, LocalDate rewardStartDate, LocalDate rewardEndDate,
+                            String productId, String optionId,  String productName, String priceComparison, LocalDate rewardStartDate, LocalDate rewardEndDate,
                             Long inflowCount, String rewardMemo) {
         this.rewardNo = rewardNo;
+        this.rewardId = rewardId;
         this.advertiserId = advertiserId;
         this.salesId = salesId;
         this.rewardStatus = rewardStatus;
@@ -38,8 +42,10 @@ public class RewardMissionDTO {
         this.salesChannel = salesChannel;
         this.rewardProductPrice = rewardProductPrice;
         this.rewardPoint = rewardPoint;
-        this.productCode = productCode;
+        this.productId = productId;
+        this.optionId = optionId;
         this.productName = productName;
+        this.priceComparison = priceComparison;
         this.rewardStartDate = rewardStartDate;
         this.rewardEndDate = rewardEndDate;
         this.inflowCount = inflowCount;
@@ -47,7 +53,7 @@ public class RewardMissionDTO {
     }
 
     public RewardMissionDTO(String advertiserId, String salesId, RewardStatus rewardStatus, String keyword, String productURL,
-                            String salesChannel, Long rewardProductPrice, Long rewardPoint, String productName, String productCode,
+                            String salesChannel, Long rewardProductPrice, Long rewardPoint, String productId, String optionId,  String productName, String priceComparison,
                             LocalDate rewardStartDate, LocalDate rewardEndDate,
                             Long inflowCount, String rewardMemo) {
         this.advertiserId = advertiserId;
@@ -58,19 +64,22 @@ public class RewardMissionDTO {
         this.salesChannel = salesChannel;
         this.rewardProductPrice = rewardProductPrice;
         this.rewardPoint = rewardPoint;
-        this.productCode = productCode;
+        this.productId = productId;
+        this.optionId = optionId;
         this.productName = productName;
+        this.priceComparison = priceComparison;
         this.rewardStartDate = rewardStartDate;
         this.rewardEndDate = rewardEndDate;
         this.inflowCount = inflowCount;
         this.rewardMemo = rewardMemo;
     }
 
-    public RewardMissionDTO(Long rewardNo, String advertiserId, String salesId, RewardStatus rewardStatus, String productURL, String keyword,
-                            String salesChannel, Long rewardProductPrice, Long rewardPoint, String productCode,String productName,
+    public RewardMissionDTO(Long rewardNo,Long rewardId,  String advertiserId, String salesId, RewardStatus rewardStatus, String productURL, String keyword,
+                            String salesChannel, Long rewardProductPrice, Long rewardPoint,String productId, String optionId,  String productName, String priceComparison,
                             LocalDate rewardStartDate, LocalDate rewardEndDate, Long inflowCount,
                             Long actualInflowCount, String rewardMemo) {
         this.rewardNo = rewardNo;
+        this.rewardId = rewardId;
         this.advertiserId = advertiserId;
         this.salesId = salesId;
         this.rewardStatus = rewardStatus;
@@ -79,8 +88,10 @@ public class RewardMissionDTO {
         this.salesChannel = salesChannel;
         this.rewardProductPrice = rewardProductPrice;
         this.rewardPoint = rewardPoint;
-        this.productCode = productCode;
+        this.productId = productId;
+        this.optionId = optionId;
         this.productName = productName;
+        this.priceComparison = priceComparison;
         this.rewardStartDate = rewardStartDate;
         this.rewardEndDate = rewardEndDate;
         this.inflowCount = inflowCount;
@@ -152,14 +163,6 @@ public class RewardMissionDTO {
         this.rewardPoint = rewardPoint;
     }
 
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
-
     public LocalDate getRewardStartDate() {
         return rewardStartDate;
     }
@@ -216,10 +219,43 @@ public class RewardMissionDTO {
         this.productName = productName;
     }
 
+    public Long getRewardId() {
+        return rewardId;
+    }
+
+    public void setRewardId(Long rewardId) {
+        this.rewardId = rewardId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getOptionId() {
+        return optionId;
+    }
+
+    public void setOptionId(String optionId) {
+        this.optionId = optionId;
+    }
+
+    public String getPriceComparison() {
+        return priceComparison;
+    }
+
+    public void setPriceComparison(String priceComparison) {
+        this.priceComparison = priceComparison;
+    }
+
     @Override
     public String toString() {
         return "RewardMissionDTO{" +
                 "rewardNo=" + rewardNo +
+                ", rewardId=" + rewardId +
                 ", advertiserId='" + advertiserId + '\'' +
                 ", salesId='" + salesId + '\'' +
                 ", rewardStatus=" + rewardStatus +
@@ -228,8 +264,10 @@ public class RewardMissionDTO {
                 ", salesChannel='" + salesChannel + '\'' +
                 ", rewardProductPrice=" + rewardProductPrice +
                 ", rewardPoint=" + rewardPoint +
-                ", productCode='" + productCode + '\'' +
+                ", productId='" + productId + '\'' +
+                ", optionId='" + optionId + '\'' +
                 ", productName='" + productName + '\'' +
+                ", priceComparison='" + priceComparison + '\'' +
                 ", rewardStartDate=" + rewardStartDate +
                 ", rewardEndDate=" + rewardEndDate +
                 ", inflowCount=" + inflowCount +
