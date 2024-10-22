@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository("rewardCommandRepository")
 public interface RewardCommandRepository extends JpaRepository<Reward, Long> {
-    @Query("SELECT COALESCE(MAX(r.rewardId), 0) FROM Reward r")
-    Long findMaxRewardCode();
+
+
 }

@@ -28,57 +28,11 @@ public class RewardMissionDTO {
 
     public RewardMissionDTO(){}
 
-    public RewardMissionDTO(Long rewardNo, Long rewardId, String advertiserId, String salesId, RewardStatus rewardStatus,
+    public RewardMissionDTO(Long rewardId, String advertiserId, String salesId, RewardStatus rewardStatus,
                             String productURL, String keyword, String salesChannel, Long rewardProductPrice, Long rewardPoint,
-                            String productId, String optionId,  String productName, String priceComparison, LocalDate rewardStartDate, LocalDate rewardEndDate,
-                            Long inflowCount, String rewardMemo) {
-        this.rewardNo = rewardNo;
-        this.rewardId = rewardId;
-        this.advertiserId = advertiserId;
-        this.salesId = salesId;
-        this.rewardStatus = rewardStatus;
-        this.productURL = productURL;
-        this.keyword = keyword;
-        this.salesChannel = salesChannel;
-        this.rewardProductPrice = rewardProductPrice;
-        this.rewardPoint = rewardPoint;
-        this.productId = productId;
-        this.optionId = optionId;
-        this.productName = productName;
-        this.priceComparison = priceComparison;
-        this.rewardStartDate = rewardStartDate;
-        this.rewardEndDate = rewardEndDate;
-        this.inflowCount = inflowCount;
-        this.rewardMemo = rewardMemo;
-    }
+                            String productId, String optionId, String productName, String priceComparison, LocalDate rewardStartDate,
+                            LocalDate rewardEndDate, Long inflowCount, Long actualInflowCount, String rewardMemo) {
 
-    public RewardMissionDTO(String advertiserId, String salesId, RewardStatus rewardStatus, String keyword, String productURL,
-                            String salesChannel, Long rewardProductPrice, Long rewardPoint, String productId, String optionId,  String productName, String priceComparison,
-                            LocalDate rewardStartDate, LocalDate rewardEndDate,
-                            Long inflowCount, String rewardMemo) {
-        this.advertiserId = advertiserId;
-        this.salesId = salesId;
-        this.rewardStatus = rewardStatus;
-        this.productURL = productURL;
-        this.keyword = keyword;
-        this.salesChannel = salesChannel;
-        this.rewardProductPrice = rewardProductPrice;
-        this.rewardPoint = rewardPoint;
-        this.productId = productId;
-        this.optionId = optionId;
-        this.productName = productName;
-        this.priceComparison = priceComparison;
-        this.rewardStartDate = rewardStartDate;
-        this.rewardEndDate = rewardEndDate;
-        this.inflowCount = inflowCount;
-        this.rewardMemo = rewardMemo;
-    }
-
-    public RewardMissionDTO(Long rewardNo,Long rewardId,  String advertiserId, String salesId, RewardStatus rewardStatus, String productURL, String keyword,
-                            String salesChannel, Long rewardProductPrice, Long rewardPoint,String productId, String optionId,  String productName, String priceComparison,
-                            LocalDate rewardStartDate, LocalDate rewardEndDate, Long inflowCount,
-                            Long actualInflowCount, String rewardMemo) {
-        this.rewardNo = rewardNo;
         this.rewardId = rewardId;
         this.advertiserId = advertiserId;
         this.salesId = salesId;
@@ -98,6 +52,55 @@ public class RewardMissionDTO {
         this.actualInflowCount = actualInflowCount;
         this.rewardMemo = rewardMemo;
     }
+
+
+
+//    public RewardMissionDTO(String advertiserId, String salesId, RewardStatus rewardStatus, String keyword, String productURL,
+//                            String salesChannel, Long rewardProductPrice, Long rewardPoint, String productId, String optionId,  String productName, String priceComparison,
+//                            LocalDate rewardStartDate, LocalDate rewardEndDate,
+//                            Long inflowCount, String rewardMemo) {
+//        this.advertiserId = advertiserId;
+//        this.salesId = salesId;
+//        this.rewardStatus = rewardStatus;
+//        this.productURL = productURL;
+//        this.keyword = keyword;
+//        this.salesChannel = salesChannel;
+//        this.rewardProductPrice = rewardProductPrice;
+//        this.rewardPoint = rewardPoint;
+//        this.productId = productId;
+//        this.optionId = optionId;
+//        this.productName = productName;
+//        this.priceComparison = priceComparison;
+//        this.rewardStartDate = rewardStartDate;
+//        this.rewardEndDate = rewardEndDate;
+//        this.inflowCount = inflowCount;
+//        this.rewardMemo = rewardMemo;
+//    }
+//
+//    public RewardMissionDTO(Long rewardNo,Long rewardId,  String advertiserId, String salesId, RewardStatus rewardStatus, String productURL, String keyword,
+//                            String salesChannel, Long rewardProductPrice, Long rewardPoint,String productId, String optionId,  String productName, String priceComparison,
+//                            LocalDate rewardStartDate, LocalDate rewardEndDate, Long inflowCount,
+//                            Long actualInflowCount, String rewardMemo) {
+//        this.rewardNo = rewardNo;
+//        this.rewardId = rewardId;
+//        this.advertiserId = advertiserId;
+//        this.salesId = salesId;
+//        this.rewardStatus = rewardStatus;
+//        this.productURL = productURL;
+//        this.keyword = keyword;
+//        this.salesChannel = salesChannel;
+//        this.rewardProductPrice = rewardProductPrice;
+//        this.rewardPoint = rewardPoint;
+//        this.productId = productId;
+//        this.optionId = optionId;
+//        this.productName = productName;
+//        this.priceComparison = priceComparison;
+//        this.rewardStartDate = rewardStartDate;
+//        this.rewardEndDate = rewardEndDate;
+//        this.inflowCount = inflowCount;
+//        this.actualInflowCount = actualInflowCount;
+//        this.rewardMemo = rewardMemo;
+//    }
 
     public Long getRewardNo() {
         return rewardNo;

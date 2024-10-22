@@ -3,7 +3,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yoon.reward.mapper.RewardMapper">
-    <select id="getRewardMissionById" parameterType="long" resultType="com.yoon.reward.reward.query.dto.RewardMissionDTO">
+    <select id="getRewardMissionById" parameterType="Long" resultType="com.yoon.reward.reward.query.dto.RewardMissionDTO">
+        SELECT * FROM reward WHERE reward_no = #{rewardNo}
+    </select>
+    <select id="findRewardByNo" parameterType="Long" resultType="com.yoon.reward.reward.command.domain.aggregate.Reward">
         SELECT * FROM reward WHERE reward_no = #{rewardNo}
     </select>
 </mapper>
