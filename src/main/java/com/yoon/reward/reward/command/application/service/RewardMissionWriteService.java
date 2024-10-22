@@ -98,13 +98,11 @@ public class RewardMissionWriteService {
         // 날짜에 따른 추가 포인트 차감 설정
         Long datePointsToDeduct = 0L;
         if (daysBetween == 10) {
-            datePointsToDeduct = 500L; // 10일 기간은 추가 차감 500 포인트
-        } else if (daysBetween == 20) {
-            datePointsToDeduct = 1000L; // 20일 기간은 추가 차감 1000 포인트
+            datePointsToDeduct = 10L;
         } else if (daysBetween == 30) {
-            datePointsToDeduct = 1500L; // 30일 기간은 추가 차감 1500 포인트
+            datePointsToDeduct = 30L;
         } else {
-            throw new IllegalArgumentException("리워드 기간은 10일, 20일, 30일 중 하나여야 합니다.");
+            throw new IllegalArgumentException("리워드 기간은 10일, 30일 중 하나여야 합니다.");
         }
 
         if (rewardMissionDTO.getInflowCount() <= 0) {
@@ -120,7 +118,7 @@ public class RewardMissionWriteService {
         Long inflowPointsToDeduct = rewardMissionDTO.getInflowCount() * 100;
         Long currentUserPoints = user.getUserPoint();
 
-        Long totalPointsToDeduct = inflowPointsToDeduct + datePointsToDeduct;
+        Long totalPointsToDeduct = inflowPointsToDeduct * datePointsToDeduct;
         // 차감될 포인트가 사용자 포인트보다 클 경우 예외 처리
         if (currentUserPoints < totalPointsToDeduct) {
             throw new IllegalArgumentException(
