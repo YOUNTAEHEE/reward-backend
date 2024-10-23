@@ -88,6 +88,11 @@ public class RewardMissionWriteService {
             throw new IllegalArgumentException("종료 날짜는 필수 항목입니다.");
         }
 
+        // 시작 날짜가 오늘 날짜보다 이전인 경우 예외 처리
+        if (rewardMissionDTO.getRewardStartDate().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("시작 날짜는 오늘 이후여야 합니다.");
+        }
+
         // 날짜 유효성 검사
         LocalDate startDate = rewardMissionDTO.getRewardStartDate();
         LocalDate endDate = rewardMissionDTO.getRewardEndDate();

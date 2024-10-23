@@ -68,16 +68,32 @@ public class JWTController {
             }
 
             String userId = userLoginDTO.getUserId();
-            String rawPassword = userLoginDTO.getUserPassword();
+
+            // 사용자 정보 조회
+            Optional<User> optionalUser = userQueryRepository.findByUserId(userLoginDTO.getUserId());
+
+            // 회원 정보가 없을 경우 처리
+            if (optionalUser.isEmpty()) {
+                throw new CustomBusinessException("회원 정보를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+            }
 
             // 사용자 정보 조회
             CustomUserDetails userDetails = (CustomUserDetails) userInfoService.loadUserByUsername(userId);
+
+            // userDetails가 null일 경우 예외 처리
+            if (userDetails == null) {
+                throw new CustomBusinessException("회원 정보를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+            }
+
+            String rawPassword = userLoginDTO.getUserPassword();
             String encodedPassword = userDetails.getPassword();
 
             // 비밀번호 검증
             if (!userInfoService.checkPassword(rawPassword, encodedPassword)) {
                 throw new CustomBusinessException("비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED);
             }
+
+
 
             // 인증된 사용자 정보
             Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
@@ -89,7 +105,7 @@ public class JWTController {
             // JWT 토큰 생성
             String token = jwtUtil.createJwt(userId, role, 60 * 60 * 211000L);
 
-            Optional<User> optionalUser = userQueryRepository.findByUserId(userLoginDTO.getUserId());
+//            Optional<User> optionalUser = userQueryRepository.findByUserId(userLoginDTO.getUserId());
 
             Map<String, Object> userInfo = new HashMap<>();
 

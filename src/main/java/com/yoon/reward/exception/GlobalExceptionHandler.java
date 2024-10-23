@@ -1,5 +1,6 @@
 package com.yoon.reward.exception;
 
+import org.springframework.aop.AopInvocationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -71,3 +72,4 @@ public class GlobalExceptionHandler {
         return errorResponse;
     }
 }
+
