@@ -9,4 +9,7 @@
     <select id="findRewardByNo" parameterType="Long" resultType="com.yoon.reward.reward.command.domain.aggregate.Reward">
         SELECT * FROM reward WHERE reward_no = #{rewardNo}
     </select>
+    <select id="findRewardAll" resultType="map">
+        SELECT reward_no, reward_point FROM reward WHERE COALESCE(actual_inflow_count, 0) &lt; inflow_count
+    </select>
 </mapper>

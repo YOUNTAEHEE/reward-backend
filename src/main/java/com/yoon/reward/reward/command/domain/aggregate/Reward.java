@@ -116,6 +116,7 @@ public class Reward {
     @Column
     private String rewardMemo;
 
+
     public void setRewardStatus(RewardStatus rewardStatus) {
         this.rewardStatus = rewardStatus;
     }

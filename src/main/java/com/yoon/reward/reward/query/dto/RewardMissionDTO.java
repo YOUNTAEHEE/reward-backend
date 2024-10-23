@@ -1,5 +1,6 @@
 package com.yoon.reward.reward.query.dto;
 
+import com.yoon.reward.reward.command.domain.aggregate.Reward;
 import com.yoon.reward.reward.command.domain.aggregate.RewardStatus;
 import jakarta.persistence.Column;
 
@@ -53,7 +54,31 @@ public class RewardMissionDTO {
         this.rewardMemo = rewardMemo;
     }
 
-
+    public RewardMissionDTO(Long rewardNo, Long rewardPoint) {
+        this.rewardNo = rewardNo;
+        this.rewardPoint = rewardPoint;
+    }
+//    public RewardMissionDTO(Reward reward) {
+//        this.rewardNo = reward.getRewardNo();
+//        this.rewardId = reward.getRewardId();
+//        this.advertiserId = reward.getAdvertiserId();
+//        this.salesId = salesId;
+//        this.rewardStatus = rewardStatus;
+//        this.productURL = productURL;
+//        this.keyword = keyword;
+//        this.salesChannel = salesChannel;
+//        this.rewardProductPrice = rewardProductPrice;
+//        this.rewardPoint = rewardPoint;
+//        this.productId = productId;
+//        this.optionId = optionId;
+//        this.productName = productName;
+//        this.priceComparison = priceComparison;
+//        this.rewardStartDate = rewardStartDate;
+//        this.rewardEndDate = rewardEndDate;
+//        this.inflowCount = inflowCount;
+//        this.actualInflowCount = actualInflowCount;
+//        this.rewardMemo = rewardMemo;
+//    }
 
 //    public RewardMissionDTO(String advertiserId, String salesId, RewardStatus rewardStatus, String keyword, String productURL,
 //                            String salesChannel, Long rewardProductPrice, Long rewardPoint, String productId, String optionId,  String productName, String priceComparison,
