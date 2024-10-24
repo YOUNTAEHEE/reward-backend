@@ -14,7 +14,7 @@ public class RewardMissionDTO {
     private RewardStatus rewardStatus;
     private String productURL;
     private String keyword;
-    private String salesChannel;
+    private String advertiserChannel;
     private Long rewardProductPrice;
     private Long rewardPoint;
     private String productId;
@@ -30,7 +30,7 @@ public class RewardMissionDTO {
     public RewardMissionDTO(){}
 
     public RewardMissionDTO(Long rewardId, String advertiserId, String salesId, RewardStatus rewardStatus,
-                            String productURL, String keyword, String salesChannel, Long rewardProductPrice, Long rewardPoint,
+                            String productURL, String keyword, String advertiserChannel, Long rewardProductPrice, Long rewardPoint,
                             String productId, String optionId, String productName, String priceComparison, LocalDate rewardStartDate,
                             LocalDate rewardEndDate, Long inflowCount, Long actualInflowCount, String rewardMemo) {
 
@@ -40,7 +40,7 @@ public class RewardMissionDTO {
         this.rewardStatus = rewardStatus;
         this.productURL = productURL;
         this.keyword = keyword;
-        this.salesChannel = salesChannel;
+        this.advertiserChannel = advertiserChannel;
         this.rewardProductPrice = rewardProductPrice;
         this.rewardPoint = rewardPoint;
         this.productId = productId;
@@ -57,6 +57,14 @@ public class RewardMissionDTO {
     public RewardMissionDTO(Long rewardNo, Long rewardPoint) {
         this.rewardNo = rewardNo;
         this.rewardPoint = rewardPoint;
+    }
+
+    public RewardMissionDTO(Long rewardPoint, String keyword, String advertiserChannel, String productName ,Long rewardProductPrice) {
+        this.rewardPoint = rewardPoint;
+        this.keyword = keyword;
+        this.advertiserChannel = advertiserChannel;
+        this.productName = productName;
+        this.rewardProductPrice = rewardProductPrice;
     }
 //    public RewardMissionDTO(Reward reward) {
 //        this.rewardNo = reward.getRewardNo();
@@ -167,12 +175,12 @@ public class RewardMissionDTO {
         this.keyword = keyword;
     }
 
-    public String getSalesChannel() {
-        return salesChannel;
+    public String getAdvertiserChannel() {
+        return advertiserChannel;
     }
 
-    public void setSalesChannel(String salesChannel) {
-        this.salesChannel = salesChannel;
+    public void setAdvertiserChannel(String advertiserChannel) {
+        this.advertiserChannel = advertiserChannel;
     }
 
     public Long getRewardProductPrice() {
@@ -289,7 +297,7 @@ public class RewardMissionDTO {
                 ", rewardStatus=" + rewardStatus +
                 ", productURL='" + productURL + '\'' +
                 ", keyword='" + keyword + '\'' +
-                ", salesChannel='" + salesChannel + '\'' +
+                ", advertiserChannel='" + advertiserChannel + '\'' +
                 ", rewardProductPrice=" + rewardProductPrice +
                 ", rewardPoint=" + rewardPoint +
                 ", productId='" + productId + '\'' +

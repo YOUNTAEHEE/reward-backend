@@ -27,16 +27,17 @@ public class RewardMissionService {
 
     }
 
-    //리워드 조회해서 리워드 미션하기쪽에 데이터 뿌리기
+    //리워드 하나 조회해서 리워드 미션하기쪽에 데이터 뿌리기
     public RewardMissionDTO rewardMission(Long rewardNo){
-        RewardMissionDTO rewardMissionDTO = rewardMapper.getRewardMissionById(rewardNo);
-        if (rewardMissionDTO == null) {
+        Reward reward = rewardMapper.findRewardByNo(rewardNo);
+        if (reward == null) {
             throw new IllegalArgumentException("해당 미션을 찾을 수 없습니다.");
         }
+        RewardMissionDTO rewardMissionDTO = new RewardMissionDTO(reward.getRewardPoint(), reward.getKeyword() , reward.getAdvertiserChannel(), reward.getProductName(), reward.getRewardProductPrice());
         return rewardMissionDTO;
     }
 
-    //미션 등록한거 보기(실유입수가 유입수 넘어간 것들 자동으로 비활성화처리, 화면에서 보이지 않기)-사용자화면
+    //미션 등록한거 리스트 보기(실유입수가 유입수 넘어간 것들 자동으로 비활성화처리, 화면에서 보이지 않기)-사용자화면
     public List<RewardMissionDTO> rewardMissionList(){
         return rewardMapper.findRewardAll()
                 .stream()

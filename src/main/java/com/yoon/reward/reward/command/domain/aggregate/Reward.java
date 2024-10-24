@@ -15,7 +15,7 @@ public class Reward {
     public Reward(){}
 
     public Reward(Long rewardId,  String advertiserId, String salesId, RewardStatus rewardStatus, String productURL,
-                  String keyword, String salesChannel, Long rewardProductPrice, Long rewardPoint,
+                  String keyword, String advertiserChannel, Long rewardProductPrice, Long rewardPoint,
                   String productId, String optionId,  String productName, String priceComparison,  LocalDate rewardStartDate, LocalDate rewardEndDate,
                   Long inflowCount, String rewardMemo) {
         this.rewardId = rewardId;
@@ -24,7 +24,7 @@ public class Reward {
         this.rewardStatus = rewardStatus;
         this.productURL = productURL;
         this.keyword = keyword;
-        this.salesChannel = salesChannel;
+        this.advertiserChannel = advertiserChannel;
         this.rewardProductPrice = rewardProductPrice;
         this.rewardPoint = rewardPoint;
         this.productId = productId;
@@ -44,7 +44,7 @@ public class Reward {
         this.rewardStatus = rewardMissionDTO.getRewardStatus();
         this.productURL = rewardMissionDTO.getProductURL();
         this.keyword = rewardMissionDTO.getKeyword();
-        this.salesChannel = rewardMissionDTO.getSalesChannel();
+        this.advertiserChannel = rewardMissionDTO.getAdvertiserChannel();
         this.rewardProductPrice = rewardMissionDTO.getRewardProductPrice();
         this.rewardPoint = rewardMissionDTO.getRewardPoint();
         this.productId = rewardMissionDTO.getProductId();
@@ -81,7 +81,7 @@ public class Reward {
     private String keyword;
 
     @Column(nullable = false)
-    private String salesChannel;
+    private String advertiserChannel;
 
     @Column(nullable = false)
     private Long rewardProductPrice;

@@ -19,9 +19,10 @@ public class RewardMissionController {
         this.rewardMissionService = rewardMissionService;
     }
 
-//미션 정보 가져오기
+//미션 하나에 대한 정보 가져오기
     @GetMapping("/{rewardNo}")
     public ResponseEntity<RewardMissionDTO> rewardMission(@PathVariable Long rewardNo){
+//        Long rewardNo2 = Long.parseLong(rewardNo);
         RewardMissionDTO rewardMissionDTO = rewardMissionService.rewardMission(rewardNo);
         return ResponseEntity.ok(rewardMissionDTO);
     }

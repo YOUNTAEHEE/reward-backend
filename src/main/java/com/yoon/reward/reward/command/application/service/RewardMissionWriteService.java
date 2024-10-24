@@ -60,7 +60,7 @@ public class RewardMissionWriteService {
             throw new IllegalArgumentException("키워드는 필수 항목입니다.");
         }
 
-        if (rewardMissionDTO.getSalesChannel() == null || rewardMissionDTO.getSalesChannel().isEmpty()) {
+        if (rewardMissionDTO.getAdvertiserChannel() == null || rewardMissionDTO.getAdvertiserChannel().isEmpty()) {
             throw new IllegalArgumentException("판매 채널은 필수 항목입니다.");
         }
 
@@ -193,7 +193,7 @@ public class RewardMissionWriteService {
             throw new IllegalArgumentException("키워드는 필수 항목입니다.");
         }
 
-        if (rewardMissionDTO.getSalesChannel() == null || rewardMissionDTO.getSalesChannel().isEmpty()) {
+        if (rewardMissionDTO.getAdvertiserChannel() == null || rewardMissionDTO.getAdvertiserChannel().isEmpty()) {
             throw new IllegalArgumentException("판매 채널은 필수 항목입니다.");
         }
 
@@ -218,7 +218,7 @@ public class RewardMissionWriteService {
         // 유입수 수정 못함, 활성화 수정 못함
         existingReward.setSalesId(rewardMissionDTO.getSalesId());
         existingReward.setKeyword(rewardMissionDTO.getKeyword());
-        existingReward.setSalesChannel(rewardMissionDTO.getSalesChannel());
+        existingReward.setAdvertiserChannel(rewardMissionDTO.getAdvertiserChannel());
         existingReward.setRewardProductPrice(rewardMissionDTO.getRewardProductPrice());
         existingReward.setProductId(rewardMissionDTO.getProductId());
         existingReward.setOptionId(rewardMissionDTO.getOptionId());
