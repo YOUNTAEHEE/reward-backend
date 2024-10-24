@@ -107,16 +107,16 @@ public class JWTController {
 
 //            Optional<User> optionalUser = userQueryRepository.findByUserId(userLoginDTO.getUserId());
 
-            Map<String, Object> userInfo = new HashMap<>();
+            Map<String, Object> loginUserInfo = new HashMap<>();
 
             optionalUser.ifPresent(user -> {
-                userInfo.put("userId", userDetails.getUsername());
-                userInfo.put("userNickname", user.getUserNickname());
-                userInfo.put("userPoint", user.getUserPoint());
+                loginUserInfo.put("userId", userDetails.getUsername());
+                loginUserInfo.put("userNickname", user.getUserNickname());
+                loginUserInfo.put("userPoint", user.getUserPoint());
             });
 
             // 토큰을 Response로 반환
-            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body(Map.of("token", token,"userInfo", userInfo,"successMessage", "로그인이 되었습니다."));
+            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body(Map.of("token", token,"loginUserInfo", loginUserInfo,"successMessage", "로그인이 되었습니다."));
         } catch (CustomBusinessException e) {
             throw e;
         } catch (IllegalArgumentException e) {

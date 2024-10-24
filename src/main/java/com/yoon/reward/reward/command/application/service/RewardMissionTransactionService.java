@@ -42,9 +42,13 @@ public class RewardMissionTransactionService {
         if (missionAnswer == null || missionAnswer.isEmpty()) {
             throw new IllegalStateException("정답을 입력해주세요.");
         }
-        if(reward.getProductId() == missionAnswer){
+        if(reward.getProductId().equals(missionAnswer)){
+            Long actualInflowCount = reward.getActualInflowCount();
+            if (actualInflowCount == null) {
+                actualInflowCount = 0L;
+            }
             //만약 실 유입수가 유입수를 넘어선다면 포인트 지급 막기
-            if(reward.getInflowCount() > reward.getActualInflowCount()){
+            if(reward.getInflowCount() <= actualInflowCount){
                 reward.setRewardStatus(RewardStatus.INACTIVE);
 //                new Reward(rewardMissionDTO);
                 rewardCommandRepository.save(reward);
@@ -57,7 +61,7 @@ public class RewardMissionTransactionService {
                 pointDetailDTO.setPointDelta(reward.getRewardPoint());
                 updatePointService.processPointTransaction(pointDetailDTO);
                 //실유입수 칼럼에 저장코드
-                reward.setInflowCount(reward.getInflowCount() + 1);
+                reward.setActualInflowCount(actualInflowCount + 1);
 
                 rewardCommandRepository.save(reward);
             }

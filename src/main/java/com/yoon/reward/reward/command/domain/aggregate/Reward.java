@@ -121,7 +121,11 @@ public class Reward {
         this.rewardStatus = rewardStatus;
     }
 
-    public void setInflowCount(Long inflowCount) {
-        this.inflowCount = inflowCount;
+    public Long getActualInflowCount() {
+        return actualInflowCount;
+    }
+
+    public void setActualInflowCount(Long actualInflowCount) {
+        this.actualInflowCount = actualInflowCount;
     }
 }

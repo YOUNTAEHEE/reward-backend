@@ -34,7 +34,7 @@ public class UpdatePointService {
         if(pointDetailDTO == null){
             throw new IllegalArgumentException("포인트가 반영이 되지 않습니다.");
         }
-
+        System.out.println("userId: " + pointDetailDTO.getUserId());
         User user = userQueryRepository.findByUserId(pointDetailDTO.getUserId())
                 .orElseThrow(()->new IllegalArgumentException("유저 정보가 없습니다."));
 

@@ -50,7 +50,6 @@ public class RewardMissionWriteService {
         if (rewardMissionDTO.getAdvertiserId() == null || rewardMissionDTO.getAdvertiserId().isEmpty()) {
             throw new IllegalArgumentException("사용자 ID는 필수 항목입니다.");
         }
-        //광고주 id가 있는지 확인하는 코드 작성(나중에 필요할때)
 
         if (rewardMissionDTO.getProductURL() == null || rewardMissionDTO.getProductURL().isEmpty()) {
             throw new IllegalArgumentException("상품URL은 필수 항목입니다.");
@@ -61,7 +60,7 @@ public class RewardMissionWriteService {
         }
 
         if (rewardMissionDTO.getAdvertiserChannel() == null || rewardMissionDTO.getAdvertiserChannel().isEmpty()) {
-            throw new IllegalArgumentException("판매 채널은 필수 항목입니다.");
+            throw new IllegalArgumentException("스토어 이름은 필수 항목입니다.");
         }
 
         if (rewardMissionDTO.getRewardProductPrice() <= 0) {
@@ -112,11 +111,16 @@ public class RewardMissionWriteService {
             throw new IllegalArgumentException("유입수는 0보다 커야 합니다.");
         }
 
-        Optional<User> optionalUser = userQueryRepository.findByUserId(rewardMissionDTO.getSalesId());
-        if (optionalUser.isEmpty()) {
-            throw new IllegalArgumentException("해당 ID의 사용자를 찾을 수 없습니다.");
+        Optional<User> optionalSalesUser = userQueryRepository.findByUserId(rewardMissionDTO.getSalesId());
+        if (optionalSalesUser.isEmpty()) {
+            throw new IllegalArgumentException("해당 영업자 ID의 사용자를 찾을 수 없습니다.");
         }
-        User user = optionalUser.get();
+//추후 필요한 코드
+//        Optional<User> optionalAdvertiserUser = userQueryRepository.findByUserId(rewardMissionDTO.getAdvertiserId());
+//        if (optionalAdvertiserUser.isEmpty()) {
+//            throw new IllegalArgumentException("해당 광고주 ID의 사용자를 찾을 수 없습니다.");
+//        }
+        User user = optionalSalesUser.get();
         // 포인트 차감 계산: 유입수 * 리워드 포인트 * 날짜 (10일이면 10, 30일이면 30)
         //원래 위의 계산 식에서  *100더 하는건데 그거 뺐음, 나중에 영업자에따라 차등 돈 +해서 할거임.
         Long rewardSetPoint = rewardMissionDTO.getRewardPoint();
@@ -194,7 +198,7 @@ public class RewardMissionWriteService {
         }
 
         if (rewardMissionDTO.getAdvertiserChannel() == null || rewardMissionDTO.getAdvertiserChannel().isEmpty()) {
-            throw new IllegalArgumentException("판매 채널은 필수 항목입니다.");
+            throw new IllegalArgumentException("스토어 이름은 필수 항목입니다.");
         }
 
         if (rewardMissionDTO.getRewardProductPrice() <= 0) {

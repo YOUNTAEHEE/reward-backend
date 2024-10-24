@@ -3,9 +3,12 @@ package com.yoon.reward.reward.query.dto;
 import com.yoon.reward.reward.command.domain.aggregate.Reward;
 import com.yoon.reward.reward.command.domain.aggregate.RewardStatus;
 import jakarta.persistence.Column;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
-
+@Getter
+@Setter
 public class RewardMissionDTO {
     private Long rewardNo;
     private Long rewardId;
@@ -135,157 +138,6 @@ public class RewardMissionDTO {
 //        this.rewardMemo = rewardMemo;
 //    }
 
-    public Long getRewardNo() {
-        return rewardNo;
-    }
-
-    public void setRewardNo(Long rewardNo) {
-        this.rewardNo = rewardNo;
-    }
-
-    public String getAdvertiserId() {
-        return advertiserId;
-    }
-
-    public void setAdvertiserId(String advertiserId) {
-        this.advertiserId = advertiserId;
-    }
-
-    public String getSalesId() {
-        return salesId;
-    }
-
-    public void setSalesId(String salesId) {
-        this.salesId = salesId;
-    }
-
-    public RewardStatus getRewardStatus() {
-        return rewardStatus;
-    }
-
-    public void setRewardStatus(RewardStatus rewardStatus) {
-        this.rewardStatus = rewardStatus;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public String getAdvertiserChannel() {
-        return advertiserChannel;
-    }
-
-    public void setAdvertiserChannel(String advertiserChannel) {
-        this.advertiserChannel = advertiserChannel;
-    }
-
-    public Long getRewardProductPrice() {
-        return rewardProductPrice;
-    }
-
-    public void setRewardProductPrice(Long rewardProductPrice) {
-        this.rewardProductPrice = rewardProductPrice;
-    }
-
-    public Long getRewardPoint() {
-        return rewardPoint;
-    }
-
-    public void setRewardPoint(Long rewardPoint) {
-        this.rewardPoint = rewardPoint;
-    }
-
-    public LocalDate getRewardStartDate() {
-        return rewardStartDate;
-    }
-
-    public void setRewardStartDate(LocalDate rewardStartDate) {
-        this.rewardStartDate = rewardStartDate;
-    }
-
-    public LocalDate getRewardEndDate() {
-        return rewardEndDate;
-    }
-
-    public void setRewardEndDate(LocalDate rewardEndDate) {
-        this.rewardEndDate = rewardEndDate;
-    }
-
-    public Long getInflowCount() {
-        return inflowCount;
-    }
-
-    public void setInflowCount(Long inflowCount) {
-        this.inflowCount = inflowCount;
-    }
-
-    public String getRewardMemo() {
-        return rewardMemo;
-    }
-
-    public void setRewardMemo(String rewardMemo) {
-        this.rewardMemo = rewardMemo;
-    }
-
-    public Long getActualInflowCount() {
-        return actualInflowCount;
-    }
-
-    public void setActualInflowCount(Long actualInflowCount) {
-        this.actualInflowCount = actualInflowCount;
-    }
-
-    public String getProductURL() {
-        return productURL;
-    }
-
-    public void setProductURL(String productURL) {
-        this.productURL = productURL;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public Long getRewardId() {
-        return rewardId;
-    }
-
-    public void setRewardId(Long rewardId) {
-        this.rewardId = rewardId;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getOptionId() {
-        return optionId;
-    }
-
-    public void setOptionId(String optionId) {
-        this.optionId = optionId;
-    }
-
-    public String getPriceComparison() {
-        return priceComparison;
-    }
-
-    public void setPriceComparison(String priceComparison) {
-        this.priceComparison = priceComparison;
-    }
 
     @Override
     public String toString() {
