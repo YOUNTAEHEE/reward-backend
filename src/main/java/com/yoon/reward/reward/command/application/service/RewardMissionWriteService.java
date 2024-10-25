@@ -51,7 +51,7 @@ public class RewardMissionWriteService {
             throw new IllegalArgumentException("사용자 ID는 필수 항목입니다.");
         }
 
-        if (rewardMissionDTO.getProductURL() == null || rewardMissionDTO.getProductURL().isEmpty()) {
+        if (rewardMissionDTO.getProductUrl() == null || rewardMissionDTO.getProductUrl().isEmpty()) {
             throw new IllegalArgumentException("상품URL은 필수 항목입니다.");
         }
 
@@ -189,7 +189,7 @@ public class RewardMissionWriteService {
             throw new IllegalArgumentException("영업자 ID는 필수 항목입니다.");
         }
 
-        if (rewardMissionDTO.getProductURL() == null || rewardMissionDTO.getProductURL().isEmpty()) {
+        if (rewardMissionDTO.getProductUrl() == null || rewardMissionDTO.getProductUrl().isEmpty()) {
             throw new IllegalArgumentException("상품URL은 필수 항목입니다.");
         }
 
@@ -228,7 +228,7 @@ public class RewardMissionWriteService {
         existingReward.setOptionId(rewardMissionDTO.getOptionId());
         existingReward.setPriceComparison(rewardMissionDTO.getPriceComparison());
         existingReward.setRewardMemo(rewardMissionDTO.getRewardMemo());
-        existingReward.setProductURL(rewardMissionDTO.getProductURL());
+        existingReward.setProductUrl(rewardMissionDTO.getProductUrl());
         existingReward.setProductName(rewardMissionDTO.getProductName());
 
         Reward reward = new Reward(existingReward);

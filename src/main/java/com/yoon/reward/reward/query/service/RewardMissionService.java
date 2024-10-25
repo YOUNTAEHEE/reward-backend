@@ -33,7 +33,7 @@ public class RewardMissionService {
         if (reward == null) {
             throw new IllegalArgumentException("해당 미션을 찾을 수 없습니다.");
         }
-        RewardMissionDTO rewardMissionDTO = new RewardMissionDTO(reward.getRewardPoint(), reward.getKeyword() , reward.getAdvertiserChannel(), reward.getProductName(), reward.getRewardProductPrice());
+        RewardMissionDTO rewardMissionDTO = new RewardMissionDTO(reward.getRewardPoint(), reward.getKeyword() , reward.getAdvertiserChannel(), reward.getProductName(), reward.getRewardProductPrice() , reward.getPriceComparison());
         return rewardMissionDTO;
     }
 
