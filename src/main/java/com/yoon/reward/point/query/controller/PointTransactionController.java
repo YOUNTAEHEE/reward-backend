@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,11 +19,11 @@ public class PointTransactionController {
         this.pointTransactionService = pointTransactionService;
     }
     //입출금 내역 조회(생각해보니까 이거 리스트로 반환아님?)
-    @GetMapping("/point/detail")
-    public ResponseEntity<PointDetailDTO> pointTransactionDetail(@RequestBody Map<String, String> requestBody){
+    @PostMapping("/point/detail")
+    public ResponseEntity<?> pointTransactionDetail(@RequestBody Map<String, String> requestBody){
         String userId = requestBody.get("userId");
         try{
-            PointDetailDTO pointDetailDTO = pointTransactionService.pointTransactionDetail(userId);
+            List<PointDetailDTO> pointDetailDTO = pointTransactionService.pointTransactionDetail(userId);
             return ResponseEntity.ok(pointDetailDTO);
         } catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

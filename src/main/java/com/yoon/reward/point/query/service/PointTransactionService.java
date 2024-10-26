@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -30,8 +31,8 @@ public class PointTransactionService {
     }
 
     //입출금 내역 조회
-    public PointDetailDTO pointTransactionDetail(String userId){
-        PointDetailDTO pointDetail = pointMapper.getPointTransactionDetail(userId);
+    public List<PointDetailDTO> pointTransactionDetail(String userId) {
+        List<PointDetailDTO> pointDetail = pointMapper.getPointTransactionDetail(userId);
         if (pointDetail == null) {
             throw new IllegalArgumentException("입출금 내역이 존재하지 않습니다.");
         }
@@ -39,9 +40,9 @@ public class PointTransactionService {
     }
 
     //유저 테이블 총 포인트 조회
-    public Map<String, Object> getTotalUserPoint(String userId){
+    public Map<String, Object> getTotalUserPoint(String userId) {
         User user = userQueryRepository.findByUserId(userId)
-                .orElseThrow(()->new IllegalArgumentException("유저 정보가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 없습니다."));
         Map<String, Object> response = new HashMap<>();
         response.put("userNickname", user.getUserNickname());
         response.put("userPoint", user.getUserPoint());

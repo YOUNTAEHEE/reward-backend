@@ -33,7 +33,9 @@ public class RewardMissionService {
         if (reward == null) {
             throw new IllegalArgumentException("해당 미션을 찾을 수 없습니다.");
         }
-        RewardMissionDTO rewardMissionDTO = new RewardMissionDTO(reward.getRewardPoint(), reward.getKeyword() , reward.getAdvertiserChannel(), reward.getProductName(), reward.getRewardProductPrice() , reward.getPriceComparison());
+        RewardMissionDTO rewardMissionDTO = new RewardMissionDTO(reward.getRewardPoint(), reward.getKeyword() ,
+                reward.getAdvertiserChannel(), reward.getProductName(), reward.getRewardProductPrice() ,
+                reward.getPriceComparison());
         return rewardMissionDTO;
     }
 
@@ -45,6 +47,14 @@ public class RewardMissionService {
                 .collect(Collectors.toList());
     }
 
+    //오늘의 미션(가장 최근꺼 1개)
+    public Long todayMission(){
+        Long today = rewardMapper.findTodayRewardOne();
+        if (today == null) {
+            throw new IllegalArgumentException("미션을 찾을 수 없습니다.");
+        }
+        return today;
+    }
 
     //등록자 화면에서 본인것만 리워드 보여주기(활성화 이전 날짜 비활성화로 수정가능하게, 종료 이후 날짜 비할성화로 수정못하게)
 

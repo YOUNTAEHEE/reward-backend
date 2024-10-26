@@ -13,4 +13,6 @@ public interface RewardMapper {
     RewardMissionDTO getRewardMissionById(Long rewardNo);
     Reward findRewardByNo (Long rewardNo);
     List<Map<String, Object>> findRewardAll();
+    Integer existsByUserIdAndRewardNo(Map<String, Object> params);
+    Long findTodayRewardOne();
 }

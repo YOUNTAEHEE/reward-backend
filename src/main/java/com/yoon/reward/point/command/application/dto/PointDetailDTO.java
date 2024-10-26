@@ -19,6 +19,12 @@ public class PointDetailDTO {
         this.pointDelta = pointDelta;
     }
 
+    public PointDetailDTO(String userId, PointAction pointAction,Long pointDelta) {
+        this.userId = userId;
+        this.pointAction = pointAction;
+        this.pointDelta = pointDelta;
+    }
+
     public String getUserId() {
         return userId;
     }

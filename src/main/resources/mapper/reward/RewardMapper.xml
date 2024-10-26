@@ -12,4 +12,22 @@
     <select id="findRewardAll" resultType="map">
         SELECT reward_no, reward_point FROM reward WHERE COALESCE(actual_inflow_count, 0) &lt; inflow_count
     </select>
+    <select id="existsByUserIdAndRewardNo" parameterType="map" resultType="Integer">
+        SELECT COUNT(1) FROM user_mission_participation WHERE reward_no = #{rewardNo} and user_id = #{userId}
+    </select>
+    <select id="findTodayRewardOne" resultType="Long">
+<!--        SELECT reward_no-->
+<!--        FROM (-->
+<!--        SELECT reward_no-->
+<!--        FROM reward-->
+<!--        ORDER BY reward_no DESC-->
+<!--        LIMIT 10-->
+<!--        ) AS recent_rewards-->
+<!--        ORDER BY RAND()-->
+<!--        LIMIT 1;-->
+        SELECT reward_no
+        FROM reward
+        ORDER BY reward_no DESC
+        LIMIT 1;
+    </select>
 </mapper>

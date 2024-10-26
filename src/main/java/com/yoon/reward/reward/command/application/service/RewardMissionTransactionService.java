@@ -6,13 +6,18 @@ import com.yoon.reward.point.command.domain.aggregate.PointAction;
 import com.yoon.reward.point.command.domain.repository.PointCommandRepository;
 import com.yoon.reward.reward.command.domain.aggregate.Reward;
 import com.yoon.reward.reward.command.domain.aggregate.RewardStatus;
+import com.yoon.reward.reward.command.domain.aggregate.UserMissionParticipation;
 import com.yoon.reward.reward.command.domain.repository.RewardCommandRepository;
+import com.yoon.reward.reward.command.domain.repository.UserMissionParticipationRepository;
 import com.yoon.reward.reward.query.dto.RewardMissionDTO;
 import com.yoon.reward.mapper.RewardMapper;
 import com.yoon.reward.reward.query.repository.RewardQueryRepository;
 import com.yoon.reward.user.query.repository.UserQueryRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.time.LocalDateTime.now;
 @Service
@@ -22,17 +27,30 @@ public class RewardMissionTransactionService {
     private final UpdatePointService updatePointService;
     private final RewardMapper rewardMapper;
     private final RewardCommandRepository rewardCommandRepository;
+    private final UserMissionParticipationRepository userMissionParticipationRepository;
 
     public RewardMissionTransactionService(UpdatePointService updatePointService, RewardMapper rewardMapper,
-                                           RewardCommandRepository rewardCommandRepository) {
+                                           RewardCommandRepository rewardCommandRepository,
+                                           UserMissionParticipationRepository userMissionParticipationRepository) {
         this.updatePointService = updatePointService;
         this.rewardMapper = rewardMapper;
         this.rewardCommandRepository = rewardCommandRepository;
+        this.userMissionParticipationRepository = userMissionParticipationRepository;
     }
 
+    //이미 미션 성공한 유저의 경우 다시 재참여 못하게
     //미션성공시 포인트 지급
     public boolean rewardMissionValidate(Long rewardNo, String userId, String missionAnswer){
         Reward reward = rewardMapper.findRewardByNo(rewardNo);
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("rewardNo", rewardNo);
+
+        Integer exists = rewardMapper.existsByUserIdAndRewardNo(params);
+        if (exists != null && exists > 0) {
+            throw new IllegalStateException("이미 참여한 미션입니다.");
+        }
+
         if(reward == null){
             throw new IllegalArgumentException("해당 미션을 찾을 수 없습니다.");
         }
@@ -57,13 +75,14 @@ public class RewardMissionTransactionService {
                 PointDetailDTO pointDetailDTO = new PointDetailDTO();
                 pointDetailDTO.setUserId(userId);
                 pointDetailDTO.setPointAction(PointAction.POINT_DEPOSIT);
-                pointDetailDTO.setPointDate(now());
+//                pointDetailDTO.setPointDate(now());
                 pointDetailDTO.setPointDelta(reward.getRewardPoint());
                 updatePointService.processPointTransaction(pointDetailDTO);
                 //실유입수 칼럼에 저장코드
                 reward.setActualInflowCount(actualInflowCount + 1);
-
                 rewardCommandRepository.save(reward);
+                UserMissionParticipation userMissionParticipation = new UserMissionParticipation(userId, rewardNo);
+                userMissionParticipationRepository.save(userMissionParticipation);
             }
             return true;
         } else{

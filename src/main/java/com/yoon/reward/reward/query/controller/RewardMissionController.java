@@ -26,6 +26,14 @@ public class RewardMissionController {
         RewardMissionDTO rewardMissionDTO = rewardMissionService.rewardMission(rewardNo);
         return ResponseEntity.ok(rewardMissionDTO);
     }
+
+    //오늘의 미션 하나에 대한 정보 가져오기
+    @GetMapping("/today")
+    public ResponseEntity<Long> todayMission(){
+        Long todayReward = rewardMissionService.todayMission();
+        return ResponseEntity.ok(todayReward);
+    }
+
 //미션 리스트 불러오기
     @GetMapping("/list")
     public ResponseEntity<?> rewardMissionList(){

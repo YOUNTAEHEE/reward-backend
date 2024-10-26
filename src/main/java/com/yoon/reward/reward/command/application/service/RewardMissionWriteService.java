@@ -139,7 +139,7 @@ public class RewardMissionWriteService {
         PointDetailDTO pointDetailDTO = new PointDetailDTO();
         pointDetailDTO.setUserId(rewardMissionDTO.getSalesId()); // 차감 대상 사용자 ID 설정
         pointDetailDTO.setPointAction(PointAction.POINT_WITHDRAW); // 포인트 차감 동작 설정
-        pointDetailDTO.setPointDate(LocalDateTime.now()); // 현재 시간 설정
+//        pointDetailDTO.setPointDate(LocalDateTime.now()); // 현재 시간 설정
         pointDetailDTO.setPointDelta(totalPointsToDeduct); // 총 차감 포인트 설정
         updatePointService.processPointTransaction(pointDetailDTO);
 

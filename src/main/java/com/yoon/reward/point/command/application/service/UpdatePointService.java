@@ -10,6 +10,8 @@ import com.yoon.reward.user.query.repository.UserQueryRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +40,17 @@ public class UpdatePointService {
         User user = userQueryRepository.findByUserId(pointDetailDTO.getUserId())
                 .orElseThrow(()->new IllegalArgumentException("유저 정보가 없습니다."));
 
+//        // 현재 날짜 및 시간 생성
+//        LocalDateTime currentDateTime = LocalDateTime.now(); // 나노초 제거
+//
+//        // 포맷된 날짜 문자열 생성
+//        String formattedDate = currentDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//
+//        // 문자열을 다시 LocalDateTime으로 변환
+//        LocalDateTime transformedDate = LocalDateTime.parse(formattedDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        // 변환된 날짜를 pointDate 필드에 설정
+        pointDetailDTO.setPointDate(LocalDateTime.now());
         PointDetail pointDetail = new PointDetail(pointDetailDTO);
         pointCommandRepository.save(pointDetail);
 
