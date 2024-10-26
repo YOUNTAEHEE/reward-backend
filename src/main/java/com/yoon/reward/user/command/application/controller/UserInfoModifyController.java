@@ -19,7 +19,7 @@ public class UserInfoModifyController {
         this.userInfoModifyService = userInfoModifyService;
     }
 
-    @PostMapping()
+    @PostMapping("modify")
     public ResponseEntity<UserInfoModifyDTO> modifyUserInfo(@RequestBody UserInfoModifyDTO userInfoModifyDTO){
         try{
             UserInfoModifyDTO updateUserInfo = userInfoModifyService.modifyUserInfo(userInfoModifyDTO);
