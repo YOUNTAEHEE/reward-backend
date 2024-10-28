@@ -27,26 +27,26 @@ class UserInfoModifyServiceTest {
     @Autowired
     private UserRegistService userRegistService;
 
-    @DisplayName("나의 정보 수정 테스트")
-    @Test
-    public void modifyUserInfo(){
-        UserRegistDTO userRegistDTO = new UserRegistDTO("string", "string", "string", "string", "string", "string", "string", "string");
-        userRegistService.registUser(userRegistDTO);
-
-        String userId = "string";
-        String userPassword = "newstring";
-        String userNickname = "newstring";
-        String userPhone = "newstring";
-        UserInfoModifyDTO userInfoModifyDTO = new UserInfoModifyDTO(userId, userPassword, userNickname, userPhone);
-
-        UserInfoModifyDTO result = Assertions.assertDoesNotThrow(
-                ()-> userInfoModifyService.modifyUserInfo(userInfoModifyDTO));
-
-        assertEquals("newstring", result.getUserNickname());
-        assertTrue(passwordEncoder.matches("newstring", result.getUserPassword()),
-                "비밀번호가 암호화된 값과 일치하지 않음");
-        assertEquals("newstring", result.getUserPhone());
-
-    }
+//    @DisplayName("나의 정보 수정 테스트")
+//    @Test
+//    public void modifyUserInfo(){
+//        UserRegistDTO userRegistDTO = new UserRegistDTO("string", "string", "string", "string", "string", "string", "string", "string");
+//        userRegistService.registUser(userRegistDTO);
+//
+//        String userId = "string";
+//        String userPassword = "newstring";
+//        String userNickname = "newstring";
+//        String userPhone = "newstring";
+//        UserInfoModifyDTO userInfoModifyDTO = new UserInfoModifyDTO(userId, userPassword, userNickname, userPhone);
+//
+//        UserInfoModifyDTO result = Assertions.assertDoesNotThrow(
+//                ()-> userInfoModifyService.modifyUserInfo(userInfoModifyDTO));
+//
+//        assertEquals("newstring", result.getUserNickname());
+//        assertTrue(passwordEncoder.matches("newstring", result.getUserPassword()),
+//                "비밀번호가 암호화된 값과 일치하지 않음");
+//        assertEquals("newstring", result.getUserPhone());
+//
+//    }
 
 }

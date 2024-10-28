@@ -1,5 +1,6 @@
 package com.yoon.reward.user.query.service;
 
+import com.yoon.reward.user.command.application.dto.UserInfoModifyDTO;
 import com.yoon.reward.user.command.domain.aggregate.User;
 import com.yoon.reward.user.query.dto.CustomUserDetails;
 import com.yoon.reward.user.query.dto.UserLoginDTO;
@@ -37,4 +38,11 @@ public class UserInfoService implements UserDetailsService {
     public boolean checkPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
+
+    public UserInfoModifyDTO getUserInfo(String userId) {
+        User user = userQueryRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 없습니다."));
+        return new UserInfoModifyDTO(user);
+    }
+
 }

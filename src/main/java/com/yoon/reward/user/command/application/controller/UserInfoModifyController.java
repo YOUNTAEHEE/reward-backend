@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
+
 @RestController
 @RequestMapping("/my/info")
 public class UserInfoModifyController {
@@ -19,13 +21,16 @@ public class UserInfoModifyController {
         this.userInfoModifyService = userInfoModifyService;
     }
 
-    @PostMapping("modify")
-    public ResponseEntity<UserInfoModifyDTO> modifyUserInfo(@RequestBody UserInfoModifyDTO userInfoModifyDTO){
-        try{
-            UserInfoModifyDTO updateUserInfo = userInfoModifyService.modifyUserInfo(userInfoModifyDTO);
-            return ResponseEntity.ok (updateUserInfo);
-        } catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    @PostMapping("/modify")
+    public ResponseEntity<?> modifyUserInfo(@RequestBody UserInfoModifyDTO userInfoModifyDTO) {
+        try {
+            userInfoModifyService.modifyUserInfo(userInfoModifyDTO);
+            return ResponseEntity.ok("정보가 성공적으로 수정되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("message", "서버 오류가 발생했습니다: " + e.getMessage()));
         }
     }
 }

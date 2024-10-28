@@ -1,5 +1,6 @@
 package com.yoon.reward.user.query.controller;
 
+import com.yoon.reward.user.command.application.dto.UserInfoModifyDTO;
 import com.yoon.reward.user.query.dto.UserLoginDTO;
 import com.yoon.reward.user.query.service.UserInfoService;
 import org.springframework.http.HttpStatus;
@@ -8,8 +9,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("/api/v1/user")
 public class UserInfoController {
 
     private final UserInfoService userInfoService;
@@ -41,4 +44,10 @@ public class UserInfoController {
         return ResponseEntity.ok(userDetails);
     }
 
+    @PostMapping("/info")
+    public ResponseEntity<?> getUserInfo(@RequestBody Map<String, String> responseBody){
+        String userId = responseBody.get("userId");
+        UserInfoModifyDTO userInfoModifyDTO = userInfoService.getUserInfo(userId);
+    return ResponseEntity.ok(userInfoModifyDTO);
+    }
 }
