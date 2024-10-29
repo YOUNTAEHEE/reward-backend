@@ -75,7 +75,7 @@
 <div align="left"><p>
 <br>▶일반 사용자/ 리워드 등록자로 구분해서 볼 수 있는 페이지 다르게 구현
 <br>▶회원가입시 이메일 주소 확인 인증 코드 받아서 인증할 수 있게 구현
-<br>▶회원정보 수정
+<br>▶회원 정보 수정 가능
 <br>▶포인트
 <br>-리워드 등록자의 미션 등록시 포인트 차감
 <br>-일반 사용자가 미션 성공하면 포인트 지급
@@ -85,7 +85,7 @@
 <br><br><br>
 <div align="center"><h1>✨ 플랫폼 화면 구성</h1></div>
 <br>
-<div align="center"><img src="images/mobile_demo.gif" width="270"></div>
+<div align="center"><img src="images/mobile_demo.gif" width="240"></div>
 <br><br><br>
 <div align="center"><img src="images/signin.png"></div>
 <div align="center"><p>회원가입 페이지</p></div><br>
