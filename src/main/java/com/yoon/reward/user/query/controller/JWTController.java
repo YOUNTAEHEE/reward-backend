@@ -111,6 +111,7 @@ public class JWTController {
 
             optionalUser.ifPresent(user -> {
                 loginUserInfo.put("userId", userDetails.getUsername());
+                loginUserInfo.put("userName", user.getUserName());
                 loginUserInfo.put("userNickname", user.getUserNickname());
                 loginUserInfo.put("userPoint", user.getUserPoint());
             });

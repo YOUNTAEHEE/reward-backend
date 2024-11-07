@@ -90,7 +90,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/advertiser").hasAnyRole("ADVERTISER", "ADMIN")
-                        .requestMatchers("/sales").hasAnyRole("SALES", "ADMIN")
+                        .requestMatchers("/sales", "/reward/sales/list").hasAnyRole("SALES", "ADMIN")
                         .requestMatchers("my/**").hasAnyRole("ADMIN", "USER", "ADVERTISER", "SALES")
                         .requestMatchers("/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()

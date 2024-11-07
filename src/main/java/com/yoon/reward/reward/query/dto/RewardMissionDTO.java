@@ -70,7 +70,30 @@ public class RewardMissionDTO {
         this.rewardProductPrice = rewardProductPrice;
         this.priceComparison = priceComparison;
     }
-//    public RewardMissionDTO(Reward reward) {
+
+    public RewardMissionDTO(Reward reward) {
+        this.rewardNo = reward.getRewardNo();
+        this.rewardId = reward.getRewardId();
+        this.advertiserId = reward.getAdvertiserId();
+        this.salesId = reward.getSalesId();
+        this.rewardStatus = reward.getRewardStatus();
+        this.productUrl = reward.getProductUrl();
+        this.keyword = reward.getKeyword();
+        this.advertiserChannel = reward.getAdvertiserChannel();
+        this.rewardProductPrice = reward.getRewardProductPrice();
+        this.rewardPoint = reward.getRewardPoint();
+        this.productId = reward.getProductId();
+        this.optionId = reward.getOptionId();
+        this.productName = reward.getProductName();
+        this.priceComparison = reward.getPriceComparison();
+        this.rewardStartDate = reward.getRewardStartDate();
+        this.rewardEndDate = reward.getRewardEndDate();
+        this.inflowCount = reward.getInflowCount();
+        this.actualInflowCount = reward.getActualInflowCount();
+        this.rewardMemo = reward.getRewardMemo();
+    }
+
+    //    public RewardMissionDTO(Reward reward) {
 //        this.rewardNo = reward.getRewardNo();
 //        this.rewardId = reward.getRewardId();
 //        this.advertiserId = reward.getAdvertiserId();

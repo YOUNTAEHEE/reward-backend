@@ -30,4 +30,7 @@
         ORDER BY reward_no DESC
         LIMIT 1;
     </select>
+    <select id="findSalesRewardAll" parameterType="String" resultType="com.yoon.reward.reward.command.domain.aggregate.Reward">
+        SELECT * FROM reward WHERE sales_id = #{userId}
+    </select>
 </mapper>

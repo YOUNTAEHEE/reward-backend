@@ -57,5 +57,13 @@ public class RewardMissionService {
     }
 
     //등록자 화면에서 본인것만 리워드 보여주기(활성화 이전 날짜 비활성화로 수정가능하게, 종료 이후 날짜 비할성화로 수정못하게)
-
+    public List<RewardMissionDTO> salesReward(String userId){
+        List<Reward> rewards = rewardMapper.findSalesRewardAll(userId);
+        List<RewardMissionDTO> rewardMissionDTOList = rewards.stream()
+                .map(reward -> {RewardMissionDTO rewardMissionDTO = new RewardMissionDTO(reward);
+                return rewardMissionDTO;
+                })
+                .collect(Collectors.toList());
+        return rewardMissionDTOList;
+    }
 }

@@ -15,4 +15,5 @@ public interface RewardMapper {
     List<Map<String, Object>> findRewardAll();
     Integer existsByUserIdAndRewardNo(Map<String, Object> params);
     Long findTodayRewardOne();
+    List<Reward> findSalesRewardAll(String userId);
 }
